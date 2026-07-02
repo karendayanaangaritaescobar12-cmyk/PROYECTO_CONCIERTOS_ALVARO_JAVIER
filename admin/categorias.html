@@ -21,6 +21,7 @@
         <a href="reportes.html">Reportes</a>
       </nav>
       <button id="logout-button" class="sidebar-button" type="button">Cerrar sesión</button>
+      <a href="../index.html" class="sidebar-button back-button" style="text-align:center;">Volver al inicio</a>
     </aside>
     <main class="admin-content">
       <div class="admin-header">
@@ -36,6 +37,7 @@
           <label>Descripción <input name="descripcion" required /></label>
         </div>
         <button type="submit" class="primary-button">Guardar categoría</button>
+        <button type="reset" class="secondary-button">Limpiar</button>
       </form>
       <div class="table-panel">
         <table class="data-table">
@@ -52,6 +54,7 @@
     </main>
   </div>
   <script defer src="../js/storage.js"></script>
+  <script defer src="../js/data-seed.js"></script>
   <script defer src="../js/admin.js"></script>
 </body>
 </html>

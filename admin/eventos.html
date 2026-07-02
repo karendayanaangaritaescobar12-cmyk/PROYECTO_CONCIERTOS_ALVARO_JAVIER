@@ -15,12 +15,13 @@
         <span class="brand-subtitle">MANAGEMENT</span>
       </div>
       <nav class="sidebar-nav">
-        <a href="admin.html" data-section="menu">Menú</a>
+        <a href="#" data-section="menu">Dashboard</a>
         <a href="#" data-section="categorias">Categorías</a>
         <a class="active" href="#" data-section="eventos">Eventos</a>
         <a href="#" data-section="ventas">Reportes</a>
       </nav>
       <button id="logout-button" class="sidebar-button" type="button">Cerrar sesión</button>
+      <a href="../index.html" class="sidebar-button back-button" style="text-align:center;">Volver al inicio</a>
     </aside>
 
     <main class="admin-content">
@@ -70,6 +71,7 @@
             <label>Descripción <input name="descripcion" required /></label>
           </div>
           <button type="submit" class="primary-button">Guardar categoría</button>
+          <button type="reset" class="secondary-button">Limpiar</button>
         </form>
         <div class="table-panel">
           <table class="data-table">
@@ -85,7 +87,7 @@
         </div>
       </section>
 
-      <section id="eventos-section" class="admin-section hidden">
+      <section id="eventos-section" class="admin-section">
         <div class="admin-header">
           <div>
             <p class="eyebrow">Gestión de eventos</p>
@@ -106,6 +108,7 @@
             <label class="full-width">Descripción <textarea name="descripcion" rows="3" required></textarea></label>
           </div>
           <button type="submit" class="primary-button">Guardar evento</button>
+          <button type="reset" class="secondary-button">Limpiar</button>
         </form>
         <div class="table-panel scrollable">
           <table class="data-table">
@@ -150,6 +153,7 @@
   </div>
 
   <script defer src="../js/storage.js"></script>
+  <script defer src="../js/data-seed.js"></script>
   <script defer src="../js/admin.js"></script>
 </body>
 </html>

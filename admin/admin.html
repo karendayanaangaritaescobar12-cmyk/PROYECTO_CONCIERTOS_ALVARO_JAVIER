@@ -15,13 +15,13 @@
         <span class="brand-subtitle">MANAGEMENT</span>
       </div>
       <nav class="sidebar-nav">
-        <a class="active" href="#" data-section="dashboard">Dashboard</a>
-        <a href="#" data-section="categorias">Categorías</a>
-        <a href="#" data-section="eventos">Eventos</a>
-        <a href="#" data-section="ventas">Reportes</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="categorias.html">Categorías</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="reportes.html">Reportes</a>
       </nav>
       <button id="logout-button" class="sidebar-button hidden" type="button">Cerrar sesión</button>
-      <button class="sidebar-button">Purge System</button>
+      <a href="../index.html" class="sidebar-button back-button" style="text-align:center;">Volver al inicio</a>
     </aside>
 
     <main class="admin-content">
@@ -37,129 +37,11 @@
           </form>
         </div>
       </section>
-
-      <section id="dashboard-section" class="admin-section hidden">
-        <div class="admin-header">
-          <div>
-            <p class="eyebrow">Panel administrativo</p>
-            <h1>Dashboard</h1>
-          </div>
-        </div>
-
-        <section class="metric-grid">
-          <article class="metric-card">
-            <span class="metric-label">Categorías</span>
-            <strong id="count-categories">0</strong>
-          </article>
-          <article class="metric-card">
-            <span class="metric-label">Eventos</span>
-            <strong id="count-events">0</strong>
-          </article>
-          <article class="metric-card">
-            <span class="metric-label">Ventas</span>
-            <strong id="count-sales">0</strong>
-          </article>
-          <article class="metric-card">
-            <span class="metric-label">Ingresos</span>
-            <strong id="count-revenue">$0</strong>
-          </article>
-        </section>
-      </section>
-
-      <section id="categorias-section" class="admin-section hidden">
-        <div class="admin-header">
-          <div>
-            <p class="eyebrow">Gestión de categorías</p>
-            <h1>Categorías</h1>
-          </div>
-        </div>
-        <form id="category-form" class="form-card">
-          <input type="hidden" name="id" />
-          <div class="form-grid">
-            <label>Nombre <input name="nombre" required /></label>
-            <label>Descripción <input name="descripcion" required /></label>
-          </div>
-          <button type="submit" class="primary-button">Guardar categoría</button>
-        </form>
-        <div class="table-panel">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="categories-body"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="eventos-section" class="admin-section hidden">
-        <div class="admin-header">
-          <div>
-            <p class="eyebrow">Gestión de eventos</p>
-            <h1>Eventos</h1>
-          </div>
-        </div>
-        <form id="event-form" class="form-card">
-          <input type="hidden" name="id" />
-          <div class="form-grid">
-            <label>Código <input name="codigo" required /></label>
-            <label>Nombre <input name="nombre" required /></label>
-            <label>Categoría <select name="categoriaId" required></select></label>
-            <label>Precio <input name="precio" type="number" min="0" required /></label>
-            <label>Fecha <input name="fecha" type="date" required /></label>
-            <label>Hora <input name="hora" type="time" required /></label>
-            <label>Ciudad <input name="ciudad" required /></label>
-            <label>Imagen URL <input name="imagen" placeholder="assets/img/evento.jpg" required /></label>
-            <label class="full-width">Descripción <textarea name="descripcion" rows="3" required></textarea></label>
-          </div>
-          <button type="submit" class="primary-button">Guardar evento</button>
-        </form>
-        <div class="table-panel scrollable">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Nombre</th>
-                <th>Categoría</th>
-                <th>Precio</th>
-                <th>Ciudad</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="events-body"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="ventas-section" class="admin-section hidden">
-        <div class="admin-header">
-          <div>
-            <p class="eyebrow">Historial de ventas</p>
-            <h1>Ventas</h1>
-          </div>
-        </div>
-        <div class="table-panel scrollable">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Cliente</th>
-                <th>Ciudad</th>
-                <th>Total</th>
-                <th>Detalle</th>
-              </tr>
-            </thead>
-            <tbody id="sales-body"></tbody>
-          </table>
-        </div>
-      </section>
     </main>
   </div>
 
   <script defer src="../js/storage.js"></script>
+  <script defer src="../js/data-seed.js"></script>
   <script defer src="../js/admin.js"></script>
 </body>
 </html>

@@ -2,7 +2,13 @@
 const initialCategories = [
   { id: Date.now() + 1, nombre: 'Rock', descripcion: 'Conciertos de rock y metal' },
   { id: Date.now() + 2, nombre: 'Electrónica', descripcion: 'Eventos con DJs y música electrónica' },
-  { id: Date.now() + 3, nombre: 'Pop', descripcion: 'Conciertos comerciales y festivales pop' }
+  { id: Date.now() + 3, nombre: 'Pop', descripcion: 'Conciertos comerciales y festivales pop' },
+  { id: Date.now() + 4, nombre: 'Jazz', descripcion: 'Música jazz y blues en vivo' },
+  { id: Date.now() + 5, nombre: 'Clásica', descripcion: 'Conciertos de música clásica y orquestal' },
+  { id: Date.now() + 6, nombre: 'Reguetón', descripcion: 'Artistas de reguetón y trap latino' },
+  { id: Date.now() + 7, nombre: 'Salsa', descripcion: 'Salsa, bachata y ritmos caribeños' },
+  { id: Date.now() + 8, nombre: 'Indie', descripcion: 'Bandas independientes y alternativas' },
+  { id: Date.now() + 9, nombre: 'Festival', descripcion: 'Festivales multigénero al aire libre' }
 ];
 
 function ensureSeedData() {

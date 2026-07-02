@@ -1,5 +1,4 @@
-﻿// admin.js
-const ADMIN_EMAIL = 'admin@mail.com';
+﻿const ADMIN_EMAIL = 'admin@gmail.com';
 const ADMIN_PASSWORD = '123456';
 
 const loginForm = document.getElementById('login-form');
@@ -23,6 +22,14 @@ const eventForm = document.getElementById('event-form');
 const eventCategorySelect = eventForm?.querySelector('select[name="categoriaId"]');
 const eventsBody = document.getElementById('events-body');
 const salesBody = document.getElementById('sales-body');
+
+function isLoginPage() {
+  return !!loginForm;
+}
+
+function isSpaPage() {
+  return !!(menuSection || (eventosSection && !isLoginPage()));
+}
 
 function getCategoriasAdmin() {
   return loadCategorias() || [];
@@ -56,12 +63,12 @@ function updateLiveTime() {
 }
 
 function showLogin() {
-  loginSection.classList.remove('hidden');
-  dashboardSection.classList.add('hidden');
-  categoriasSection.classList.add('hidden');
-  eventosSection.classList.add('hidden');
-  ventasSection.classList.add('hidden');
-  logoutButton.classList.add('hidden');
+  if (loginSection) loginSection.classList.remove('hidden');
+  if (dashboardSection) dashboardSection.classList.add('hidden');
+  if (categoriasSection) categoriasSection.classList.add('hidden');
+  if (eventosSection) eventosSection.classList.add('hidden');
+  if (ventasSection) ventasSection.classList.add('hidden');
+  if (logoutButton) logoutButton.classList.add('hidden');
   navLinks.forEach(link => link.classList.remove('active'));
   if (loginError) {
     loginError.classList.add('hidden');
@@ -70,34 +77,28 @@ function showLogin() {
 
 function showSection(sectionId) {
   if (!loadSesionAdmin()) {
-    if (loginSection) {
-      showLogin();
-      return;
-    }
     window.location.href = 'admin.html';
     return;
   }
 
-  if (loginSection) loginSection.classList.add('hidden');
-  if (menuSection) menuSection.classList.add('hidden');
-  if (dashboardSection) dashboardSection.classList.add('hidden');
-  if (categoriasSection) categoriasSection.classList.add('hidden');
-  if (eventosSection) eventosSection.classList.add('hidden');
-  if (ventasSection) ventasSection.classList.add('hidden');
+  if (isSpaPage()) {
+    if (menuSection) menuSection.classList.add('hidden');
+    if (dashboardSection) dashboardSection.classList.add('hidden');
+    if (categoriasSection) categoriasSection.classList.add('hidden');
+    if (eventosSection) eventosSection.classList.add('hidden');
+    if (ventasSection) ventasSection.classList.add('hidden');
+  }
 
   const section = document.getElementById(`${sectionId}-section`);
-  section?.classList.remove('hidden');
-  logoutButton.classList.remove('hidden');
+  if (section) section.classList.remove('hidden');
+
+  if (logoutButton) logoutButton.classList.remove('hidden');
 
   navLinks.forEach(link => {
     link.classList.toggle('active', link.dataset.section === sectionId);
   });
 
-  if (sectionId === 'menu') {
-    updateDashboard();
-  }
-
-  if (sectionId === 'dashboard') {
+  if (sectionId === 'menu' || sectionId === 'dashboard') {
     updateDashboard();
   }
 
@@ -165,12 +166,14 @@ function fillEventCategorySelect() {
 }
 
 function resetCategoryForm() {
+  if (!categoryForm) return;
   categoryForm.reset();
   const idInput = categoryForm.querySelector('input[name="id"]');
   if (idInput) idInput.value = '';
 }
 
 function resetEventForm() {
+  if (!eventForm) return;
   eventForm.reset();
   const idInput = eventForm.querySelector('input[name="id"]');
   if (idInput) idInput.value = '';
@@ -234,9 +237,9 @@ function fillCategoryForm(categoriaId) {
   const categoria = categorias.find(c => Number(c.id) === Number(categoriaId));
   if (!categoria) return;
 
-  const idInput = categoryForm.querySelector('input[name="id"]');
-  const nombreInput = categoryForm.querySelector('input[name="nombre"]');
-  const descripcionInput = categoryForm.querySelector('input[name="descripcion"]');
+  const idInput = categoryForm?.querySelector('input[name="id"]');
+  const nombreInput = categoryForm?.querySelector('input[name="nombre"]');
+  const descripcionInput = categoryForm?.querySelector('input[name="descripcion"]');
 
   if (idInput) idInput.value = categoria.id;
   if (nombreInput) nombreInput.value = categoria.nombre;
@@ -248,16 +251,16 @@ function fillEventForm(eventoId) {
   const evento = eventos.find(e => Number(e.id) === Number(eventoId));
   if (!evento) return;
 
-  const idInput = eventForm.querySelector('input[name="id"]');
-  const codigoInput = eventForm.querySelector('input[name="codigo"]');
-  const nombreInput = eventForm.querySelector('input[name="nombre"]');
-  const categoriaSelect = eventForm.querySelector('select[name="categoriaId"]');
-  const precioInput = eventForm.querySelector('input[name="precio"]');
-  const fechaInput = eventForm.querySelector('input[name="fecha"]');
-  const horaInput = eventForm.querySelector('input[name="hora"]');
-  const ciudadInput = eventForm.querySelector('input[name="ciudad"]');
-  const imagenInput = eventForm.querySelector('input[name="imagen"]');
-  const descripcionInput = eventForm.querySelector('textarea[name="descripcion"]');
+  const idInput = eventForm?.querySelector('input[name="id"]');
+  const codigoInput = eventForm?.querySelector('input[name="codigo"]');
+  const nombreInput = eventForm?.querySelector('input[name="nombre"]');
+  const categoriaSelect = eventForm?.querySelector('select[name="categoriaId"]');
+  const precioInput = eventForm?.querySelector('input[name="precio"]');
+  const fechaInput = eventForm?.querySelector('input[name="fecha"]');
+  const horaInput = eventForm?.querySelector('input[name="hora"]');
+  const ciudadInput = eventForm?.querySelector('input[name="ciudad"]');
+  const imagenInput = eventForm?.querySelector('input[name="imagen"]');
+  const descripcionInput = eventForm?.querySelector('textarea[name="descripcion"]');
 
   if (idInput) idInput.value = evento.id;
   if (codigoInput) codigoInput.value = evento.codigo;
@@ -374,6 +377,7 @@ function handleTableClick(event) {
   }
 
   if (action === 'delete-category') {
+    if (!confirm('¿Eliminar esta categoría? También se eliminarán todos los eventos asociados.')) return;
     const categorias = getCategoriasAdmin().filter(categoria => Number(categoria.id) !== id);
     saveCategoryList(categorias);
     const eventos = getEventosAdmin().filter(evento => Number(evento.categoriaId) !== id);
@@ -391,6 +395,7 @@ function handleTableClick(event) {
   }
 
   if (action === 'delete-event') {
+    if (!confirm('¿Eliminar este evento?')) return;
     const eventos = getEventosAdmin().filter(evento => Number(evento.id) !== id);
     saveEventList(eventos);
     renderEventos();
@@ -419,7 +424,6 @@ function handleNavClick(event) {
     showLogin();
     return;
   }
-
   showSection(section);
 }
 
@@ -443,23 +447,22 @@ function handleLogout() {
   window.location.href = 'admin.html';
 }
 
-function initAdminApp() {
-  if (loginForm) {
-    loginForm.addEventListener('submit', handleLogin);
-    loginForm.addEventListener('input', () => {
-      if (loginError) loginError.classList.add('hidden');
-    });
+function initLoginPage() {
+  loginForm.addEventListener('submit', handleLogin);
+  loginForm.addEventListener('input', () => {
+    if (loginError) loginError.classList.add('hidden');
+  });
 
-    if (loadSesionAdmin()) {
-      window.location.href = 'eventos.html';
-      return;
-    }
-
-    showLogin();
+  if (loadSesionAdmin()) {
+    window.location.href = 'eventos.html';
     return;
   }
 
-  if (logoutButton) logoutButton.addEventListener('click', handleLogout);
+  showLogin();
+}
+
+function initSpaPage() {
+  logoutButton.addEventListener('click', handleLogout);
   navLinks.forEach(link => link.addEventListener('click', handleNavClick));
   if (categoryForm) categoryForm.addEventListener('submit', handleCategorySubmit);
   if (eventForm) eventForm.addEventListener('submit', handleEventSubmit);
@@ -478,6 +481,61 @@ function initAdminApp() {
     updateLiveTime();
     setInterval(updateLiveTime, 1000);
   }
+}
+
+function initStandalonePage() {
+  if (!loadSesionAdmin()) {
+    window.location.href = 'admin.html';
+    return;
+  }
+
+  logoutButton.addEventListener('click', handleLogout);
+
+  if (categoriesBody) {
+    categoriesBody.addEventListener('click', handleTableClick);
+    renderCategorias();
+  }
+
+  if (eventsBody) {
+    eventsBody.addEventListener('click', handleTableClick);
+    renderEventos();
+  }
+
+  if (salesBody) {
+    salesBody.addEventListener('click', handleTableClick);
+    renderVentas();
+  }
+
+  if (categoryForm) {
+    categoryForm.addEventListener('submit', handleCategorySubmit);
+    fillEventCategorySelect();
+  }
+
+  if (eventForm) {
+    eventForm.addEventListener('submit', handleEventSubmit);
+    fillEventCategorySelect();
+  }
+
+  updateDashboard();
+
+  if (liveTime) {
+    updateLiveTime();
+    setInterval(updateLiveTime, 1000);
+  }
+}
+
+function initAdminApp() {
+  if (isLoginPage()) {
+    initLoginPage();
+    return;
+  }
+
+  if (isSpaPage()) {
+    initSpaPage();
+    return;
+  }
+
+  initStandalonePage();
 }
 
 document.addEventListener('DOMContentLoaded', initAdminApp);
