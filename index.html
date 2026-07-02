@@ -12,10 +12,15 @@
     <div class="container header-inner">
       <a class="brand" href="index.html">Conciertos Conectados</a>
       <nav class="main-nav">
-        <a href="index.html">Eventos</a>
-        <a href="admin.html">Administración</a>
+        <a href="index.html">Inicio</a>
+        <a href="#categorias">Categorías</a>
+        <a href="#eventos">Eventos</a>
+        <a href="#contacto">Contacto</a>
       </nav>
-      <button id="open-cart" class="cart-toggle" type="button">Carrito <span id="cart-count">0</span></button>
+      <div class="header-actions">
+        <button id="open-cart" class="cart-toggle" type="button">Carrito <span id="cart-count">0</span></button>
+        <a class="secondary-button" href="admin/admin.html">Administración</a>
+      </div>
     </div>
   </header>
 
@@ -27,7 +32,7 @@
         <p>Filtra por categoría y ciudad, agrega conciertos al carrito y confirma tu compra con datos personales.</p>
       </div>
 
-      <section class="filters-panel">
+      <section id="categorias" class="filters-panel">
         <div class="filter-group">
           <label for="search-input">Buscar evento</label>
           <input id="search-input" type="search" placeholder="Buscar por nombre..." />

@@ -7,11 +7,16 @@ const loginError = document.getElementById('login-error');
 const logoutButton = document.getElementById('logout-button');
 const navLinks = document.querySelectorAll('.sidebar-nav a');
 const loginSection = document.getElementById('login-section');
+const menuSection = document.getElementById('menu-section');
 const dashboardSection = document.getElementById('dashboard-section');
 const categoriasSection = document.getElementById('categorias-section');
 const eventosSection = document.getElementById('eventos-section');
 const ventasSection = document.getElementById('ventas-section');
 const countCategories = document.getElementById('count-categories');
+const countEvents = document.getElementById('count-events');
+const countSales = document.getElementById('count-sales');
+const countRevenue = document.getElementById('count-revenue');
+const liveTime = document.getElementById('live-time');
 const countEvents = document.getElementById('count-events');
 const countSales = document.getElementById('count-sales');
 const countRevenue = document.getElementById('count-revenue');
@@ -44,6 +49,13 @@ function updateDashboard() {
   if (countEvents) countEvents.textContent = eventos.length;
   if (countSales) countSales.textContent = ventas.length;
   if (countRevenue) countRevenue.textContent = `$${totalRevenue}`;
+  updateLiveTime();
+}
+
+function updateLiveTime() {
+  if (liveTime) {
+    liveTime.textContent = new Date().toLocaleTimeString('es-CO');
+  }
 }
 
 function showLogin() {
@@ -61,15 +73,20 @@ function showLogin() {
 
 function showSection(sectionId) {
   if (!loadSesionAdmin()) {
-    showLogin();
+    if (loginSection) {
+      showLogin();
+      return;
+    }
+    window.location.href = 'admin.html';
     return;
   }
 
-  loginSection.classList.add('hidden');
-  dashboardSection.classList.add('hidden');
-  categoriasSection.classList.add('hidden');
-  eventosSection.classList.add('hidden');
-  ventasSection.classList.add('hidden');
+  if (loginSection) loginSection.classList.add('hidden');
+  if (menuSection) menuSection.classList.add('hidden');
+  if (dashboardSection) dashboardSection.classList.add('hidden');
+  if (categoriasSection) categoriasSection.classList.add('hidden');
+  if (eventosSection) eventosSection.classList.add('hidden');
+  if (ventasSection) ventasSection.classList.add('hidden');
 
   const section = document.getElementById(`${sectionId}-section`);
   section?.classList.remove('hidden');
@@ -78,6 +95,10 @@ function showSection(sectionId) {
   navLinks.forEach(link => {
     link.classList.toggle('active', link.dataset.section === sectionId);
   });
+
+  if (sectionId === 'menu') {
+    updateDashboard();
+  }
 
   if (sectionId === 'dashboard') {
     updateDashboard();
@@ -414,8 +435,7 @@ function handleLogin(event) {
   if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
     saveSesionAdmin({ email });
     if (loginError) loginError.classList.add('hidden');
-    showSection('dashboard');
-    updateDashboard();
+    window.location.href = 'eventos.html';
   } else {
     if (loginError) loginError.classList.remove('hidden');
   }
@@ -423,7 +443,7 @@ function handleLogin(event) {
 
 function handleLogout() {
   clearSesionAdmin();
-  showLogin();
+  window.location.href = 'admin.html';
 }
 
 function initAdminApp() {
@@ -432,7 +452,16 @@ function initAdminApp() {
     loginForm.addEventListener('input', () => {
       if (loginError) loginError.classList.add('hidden');
     });
+
+    if (loadSesionAdmin()) {
+      window.location.href = 'eventos.html';
+      return;
+    }
+
+    showLogin();
+    return;
   }
+
   if (logoutButton) logoutButton.addEventListener('click', handleLogout);
   navLinks.forEach(link => link.addEventListener('click', handleNavClick));
   if (categoryForm) categoryForm.addEventListener('submit', handleCategorySubmit);
@@ -442,10 +471,15 @@ function initAdminApp() {
   if (salesBody) salesBody.addEventListener('click', handleTableClick);
 
   if (loadSesionAdmin()) {
-    showSection('dashboard');
+    showSection('eventos');
     updateDashboard();
   } else {
-    showLogin();
+    window.location.href = 'admin.html';
+  }
+
+  if (liveTime) {
+    updateLiveTime();
+    setInterval(updateLiveTime, 1000);
   }
 }
 
