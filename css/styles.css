@@ -489,6 +489,15 @@ body {
   border-color: #f7d34e;
 }
 
+.form-card select {
+  color: #f7d34e;
+}
+
+.form-card select option {
+  color: #333;
+  background: #fff;
+}
+
 .form-card .primary-button,
 .form-card .secondary-button {
   margin-top: 0.75rem;

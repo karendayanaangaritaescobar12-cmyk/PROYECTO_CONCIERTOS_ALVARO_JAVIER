@@ -20,6 +20,8 @@ const categoryForm = document.getElementById('category-form');
 const categoriesBody = document.getElementById('categories-body');
 const eventForm = document.getElementById('event-form');
 const eventCategorySelect = eventForm?.querySelector('select[name="categoriaId"]');
+const paisSelect = document.getElementById('pais-select');
+const ciudadSelect = document.getElementById('ciudad-select');
 const eventsBody = document.getElementById('events-body');
 const salesBody = document.getElementById('sales-body');
 const mensajesSection = document.getElementById('mensajes-section');
@@ -35,6 +37,43 @@ function isSpaPage() {
 
 function getCategoriasAdmin() {
   return loadCategorias() || [];
+}
+
+function getPaisesAdmin() {
+  return loadPaises() || [];
+}
+
+function fillPaisSelect() {
+  if (!paisSelect) return;
+  const paises = getPaisesAdmin();
+  paisSelect.innerHTML = '<option value="">Selecciona país</option>';
+  paises.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id;
+    opt.textContent = p.nombre;
+    paisSelect.appendChild(opt);
+  });
+}
+
+function fillCiudadSelect(paisId, selectedCiudad) {
+  if (!ciudadSelect) return;
+  ciudadSelect.innerHTML = '<option value="">Selecciona ciudad</option>';
+  if (!paisId) return;
+  const pais = getPaisesAdmin().find(p => Number(p.id) === Number(paisId));
+  if (!pais) return;
+  pais.ciudades.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c;
+    opt.textContent = c;
+    if (c === selectedCiudad) opt.selected = true;
+    ciudadSelect.appendChild(opt);
+  });
+}
+
+function setupPaisListener() {
+  paisSelect?.addEventListener('change', () => {
+    fillCiudadSelect(paisSelect.value, '');
+  });
 }
 
 function getEventosAdmin() {
@@ -114,6 +153,8 @@ function showSection(sectionId) {
   if (sectionId === 'eventos') {
     renderEventos();
     fillEventCategorySelect();
+    fillPaisSelect();
+    ciudadSelect.innerHTML = '<option value="">Selecciona ciudad</option>';
   }
 
   if (sectionId === 'ventas') {
@@ -185,6 +226,8 @@ function resetEventForm() {
   eventForm.reset();
   const idInput = eventForm.querySelector('input[name="id"]');
   if (idInput) idInput.value = '';
+  fillPaisSelect();
+  ciudadSelect.innerHTML = '<option value="">Selecciona ciudad</option>';
 }
 
 function renderEventos() {
@@ -192,20 +235,22 @@ function renderEventos() {
   if (!eventsBody) return;
 
   if (!eventos.length) {
-    eventsBody.innerHTML = '<tr><td colspan="6">No hay eventos registrados.</td></tr>';
+    eventsBody.innerHTML = '<tr><td colspan="7">No hay eventos registrados.</td></tr>';
     return;
   }
 
   eventsBody.innerHTML = eventos
     .map(evento => {
       const categoria = getCategoriasAdmin().find(cat => cat.id === Number(evento.categoriaId));
+      const pais = getPaisesAdmin().find(p => Number(p.id) === Number(evento.paisId));
       return `
         <tr>
           <td>${evento.codigo}</td>
           <td>${evento.nombre}</td>
           <td>${categoria?.nombre || 'Sin categoría'}</td>
-          <td>$${evento.precio}</td>
+          <td>${pais?.nombre || '-'}</td>
           <td>${evento.ciudad}</td>
+          <td>$${evento.precio}</td>
           <td>
             <button class="action-button edit" data-action="edit-event" data-id="${evento.id}">Editar</button>
             <button class="action-button delete" data-action="delete-event" data-id="${evento.id}">Eliminar</button>
@@ -287,10 +332,11 @@ function fillEventForm(eventoId) {
   const codigoInput = eventForm?.querySelector('input[name="codigo"]');
   const nombreInput = eventForm?.querySelector('input[name="nombre"]');
   const categoriaSelect = eventForm?.querySelector('select[name="categoriaId"]');
+  const paisIdInput = eventForm?.querySelector('select[name="paisId"]');
+  const ciudadInput = eventForm?.querySelector('select[name="ciudad"]');
   const precioInput = eventForm?.querySelector('input[name="precio"]');
   const fechaInput = eventForm?.querySelector('input[name="fecha"]');
   const horaInput = eventForm?.querySelector('input[name="hora"]');
-  const ciudadInput = eventForm?.querySelector('input[name="ciudad"]');
   const imagenInput = eventForm?.querySelector('input[name="imagen"]');
   const descripcionInput = eventForm?.querySelector('textarea[name="descripcion"]');
 
@@ -298,10 +344,11 @@ function fillEventForm(eventoId) {
   if (codigoInput) codigoInput.value = evento.codigo;
   if (nombreInput) nombreInput.value = evento.nombre;
   if (categoriaSelect) categoriaSelect.value = evento.categoriaId;
+  if (paisIdInput) paisIdInput.value = evento.paisId;
+  fillCiudadSelect(evento.paisId, evento.ciudad);
   if (precioInput) precioInput.value = evento.precio;
   if (fechaInput) fechaInput.value = evento.fecha;
   if (horaInput) horaInput.value = evento.hora;
-  if (ciudadInput) ciudadInput.value = evento.ciudad;
   if (imagenInput) imagenInput.value = evento.imagen;
   if (descripcionInput) descripcionInput.value = evento.descripcion;
 }
@@ -344,6 +391,7 @@ function handleEventSubmit(event) {
   const codigo = formData.get('codigo')?.toString().trim();
   const nombre = formData.get('nombre')?.toString().trim();
   const categoriaId = formData.get('categoriaId');
+  const paisId = formData.get('paisId');
   const precio = Number(formData.get('precio'));
   const fecha = formData.get('fecha')?.toString();
   const hora = formData.get('hora')?.toString();
@@ -352,7 +400,7 @@ function handleEventSubmit(event) {
   const descripcion = formData.get('descripcion')?.toString().trim();
   const eventos = getEventosAdmin();
 
-  if (!codigo || !nombre || !categoriaId || !precio || !fecha || !hora || !ciudad || !imagen || !descripcion) {
+  if (!codigo || !nombre || !categoriaId || !paisId || !precio || !fecha || !hora || !ciudad || !imagen || !descripcion) {
     return;
   }
 
@@ -364,6 +412,7 @@ function handleEventSubmit(event) {
           codigo,
           nombre,
           categoriaId: Number(categoriaId),
+          paisId: Number(paisId),
           precio,
           fecha,
           hora,
@@ -381,6 +430,7 @@ function handleEventSubmit(event) {
       codigo,
       nombre,
       categoriaId: Number(categoriaId),
+      paisId: Number(paisId),
       precio,
       fecha,
       hora,
@@ -496,6 +546,7 @@ function initLoginPage() {
 function exportJSON() {
   const data = {
     categorias: loadCategorias(),
+    paises: loadPaises(),
     eventos: loadEventos(),
     ventas: loadVentas(),
     contactos: typeof obtenerContactos === 'function' ? obtenerContactos() : []
@@ -513,7 +564,11 @@ function initSpaPage() {
   logoutButton.addEventListener('click', handleLogout);
   navLinks.forEach(link => link.addEventListener('click', handleNavClick));
   if (categoryForm) categoryForm.addEventListener('submit', handleCategorySubmit);
-  if (eventForm) eventForm.addEventListener('submit', handleEventSubmit);
+  if (eventForm) {
+    eventForm.addEventListener('submit', handleEventSubmit);
+    fillPaisSelect();
+    setupPaisListener();
+  }
   if (categoriesBody) categoriesBody.addEventListener('click', handleTableClick);
   if (eventsBody) eventsBody.addEventListener('click', handleTableClick);
   if (salesBody) salesBody.addEventListener('click', handleTableClick);
@@ -568,6 +623,8 @@ function initStandalonePage() {
   if (eventForm) {
     eventForm.addEventListener('submit', handleEventSubmit);
     fillEventCategorySelect();
+    fillPaisSelect();
+    setupPaisListener();
   }
 
   updateDashboard();

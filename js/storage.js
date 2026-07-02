@@ -3,7 +3,8 @@
   eventos: 'conciertos_eventos',
   ventas: 'conciertos_ventas',
   carrito: 'conciertos_carrito',
-  sesionAdmin: 'conciertos_sesion_admin'
+  sesionAdmin: 'conciertos_sesion_admin',
+  paises: 'conciertos_paises'
 };
 
 function parseJSON(value) {
@@ -73,6 +74,14 @@ function clearSesionAdmin() {
   localStorage.removeItem(STORAGE_KEYS.sesionAdmin);
 }
 
+function loadPaises() {
+  return loadArray(STORAGE_KEYS.paises);
+}
+
+function savePaises(paises) {
+  saveItem(STORAGE_KEYS.paises, paises);
+}
+
 window.loadCategorias = loadCategorias;
 window.saveCategorias = saveCategorias;
 window.loadEventos = loadEventos;
@@ -84,3 +93,5 @@ window.saveCarrito = saveCarrito;
 window.loadSesionAdmin = loadSesionAdmin;
 window.saveSesionAdmin = saveSesionAdmin;
 window.clearSesionAdmin = clearSesionAdmin;
+window.loadPaises = loadPaises;
+window.savePaises = savePaises;
