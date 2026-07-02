@@ -1,42 +1,91 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Conciertos Conectados</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body>
   <header class="site-header">
-    <div class="container">
-      <h1>Conciertos Conectados</h1>
-      <nav>
-        <a href="index.html">Inicio</a>
+    <div class="container header-inner">
+      <a class="brand" href="index.html">Conciertos Conectados</a>
+      <nav class="main-nav">
+        <a href="index.html">Eventos</a>
         <a href="admin.html">Administración</a>
       </nav>
+      <button id="open-cart" class="cart-toggle" type="button">Carrito <span id="cart-count">0</span></button>
     </div>
   </header>
 
-  <main class="container">
-    <section id="home-hero">
-      <h2>Bienvenido a tu proyecto de conciertos</h2>
-      <p>Esta es la vista pública. Usa el panel de administración para crear y editar eventos.</p>
+  <main class="container public-layout">
+    <section class="public-panel">
+      <div class="hero-card">
+        <p class="eyebrow">Vista cliente</p>
+        <h1>Explora eventos y compra tus entradas</h1>
+        <p>Filtra por categoría y ciudad, agrega conciertos al carrito y confirma tu compra con datos personales.</p>
+      </div>
+
+      <section class="filters-panel">
+        <div class="filter-group">
+          <label for="search-input">Buscar evento</label>
+          <input id="search-input" type="search" placeholder="Buscar por nombre..." />
+        </div>
+        <div class="filter-group">
+          <label for="category-filter">Categoría</label>
+          <select id="category-filter"><option value="">Todas</option></select>
+        </div>
+        <div class="filter-group">
+          <label for="city-filter">Ciudad</label>
+          <select id="city-filter"><option value="">Todas</option></select>
+        </div>
+      </section>
+
+      <section class="events-panel">
+        <h2>Próximos conciertos</h2>
+        <div id="events" class="events-grid"></div>
+      </section>
     </section>
 
-    <section id="event-list">
-      <h3>Próximos eventos</h3>
-      <div id="events"></div>
-    </section>
+    <aside class="cart-panel hidden" id="cart-panel">
+      <div class="cart-header">
+        <div>
+          <p class="eyebrow">Carrito</p>
+          <h2>Resumen de compra</h2>
+        </div>
+        <button id="close-cart" class="icon-button">Cerrar</button>
+      </div>
+
+      <div id="cart-items" class="cart-items"></div>
+      <div class="cart-summary">
+        <div>
+          <span>Total</span>
+          <strong id="cart-total">$0</strong>
+        </div>
+        <button id="checkout-button" class="primary-button" type="button">Pagar</button>
+      </div>
+
+      <form id="checkout-form" class="checkout-form hidden">
+        <h3>Datos del comprador</h3>
+        <div class="form-grid">
+          <label>Identificación <input name="identificacion" required /></label>
+          <label>Nombre completo <input name="nombre" required /></label>
+          <label>Dirección <input name="direccion" required /></label>
+          <label>Teléfono <input name="telefono" required /></label>
+          <label>Email <input name="email" type="email" required /></label>
+          <label>Ciudad <input name="ciudad" required /></label>
+        </div>
+        <button type="submit" class="primary-button">Confirmar compra</button>
+        <p id="checkout-message" class="success-message hidden"></p>
+      </form>
+    </aside>
   </main>
-
-  <footer class="site-footer">
-    <p>Proyecto de conciertos · Página pública</p>
-  </footer>
 
   <script defer src="js/data-seed.js"></script>
   <script defer src="js/storage.js"></script>
   <script defer src="js/components.js"></script>
+  <script defer src="js/cart.js"></script>
   <script defer src="js/main.js"></script>
 </body>
 </html>

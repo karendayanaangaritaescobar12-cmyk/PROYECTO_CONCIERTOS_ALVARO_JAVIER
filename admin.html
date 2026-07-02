@@ -1,11 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administración | Conciertos Conectados</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body class="admin-page">
   <div class="admin-layout">
@@ -15,99 +15,151 @@
         <span class="brand-subtitle">MANAGEMENT</span>
       </div>
       <nav class="sidebar-nav">
-        <a class="active" href="#">Dashboard</a>
+        <a class="active" href="#" data-section="dashboard">Dashboard</a>
+        <a href="#" data-section="categorias">Categorías</a>
+        <a href="#" data-section="eventos">Eventos</a>
+        <a href="#" data-section="ventas">Ventas</a>
       </nav>
+      <button id="logout-button" class="sidebar-button hidden" type="button">Cerrar sesión</button>
       <button class="sidebar-button">Purge System</button>
     </aside>
 
     <main class="admin-content">
-      <header class="admin-header">
-        <div>
-          <p class="eyebrow">DAMNED SOULS REGISTRY</p>
-          <h1>Infernal Concerto</h1>
+      <section id="login-section" class="auth-panel">
+        <div class="auth-card">
+          <p class="eyebrow">Administrador</p>
+          <h1>Ingresa al panel</h1>
+          <form id="login-form">
+            <label>Email <input name="email" type="email" placeholder="Ingresa tu email" required /></label>
+            <label>Contraseña <input name="password" type="password" placeholder="Ingresa tu contraseña" required /></label>
+            <button type="submit" class="primary-button">Ingresar</button>
+            <p id="login-error" class="error-message hidden">Credenciales incorrectas.</p>
+          </form>
         </div>
-        <div class="header-actions">
-          <button class="icon-button">Reports</button>
-          <button class="icon-button">Analytics</button>
-        </div>
-      </header>
-
-      <section class="metric-grid">
-        <article class="metric-card metric-card-large">
-          <span class="metric-label">Soul Harvest Rate</span>
-          <strong>66.6%</strong>
-          <div class="metric-bar"><span style="width:66.6%"></span></div>
-        </article>
-        <article class="metric-card">
-          <span class="metric-label">Active Rites</span>
-          <strong>1,312</strong>
-        </article>
-        <article class="metric-card">
-          <span class="metric-label">Theater Capacity</span>
-          <strong>OVERFLOW</strong>
-        </article>
       </section>
 
-      <section class="table-section">
-        <div class="table-header">
+      <section id="dashboard-section" class="admin-section hidden">
+        <div class="admin-header">
           <div>
-            <p class="table-title">DAMNED SOULS DATABASE</p>
-            <p class="table-subtitle">Manifest of all current attendees and their metaphysical standings.</p>
-          </div>
-          <div class="table-actions">
-            <input type="search" id="search-input" placeholder="Search soul id...">
-            <button class="filter-button">Filter</button>
+            <p class="eyebrow">Panel administrativo</p>
+            <h1>Dashboard</h1>
           </div>
         </div>
 
+        <section class="metric-grid">
+          <article class="metric-card">
+            <span class="metric-label">Categorías</span>
+            <strong id="count-categories">0</strong>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Eventos</span>
+            <strong id="count-events">0</strong>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Ventas</span>
+            <strong id="count-sales">0</strong>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Ingresos</span>
+            <strong id="count-revenue">$0</strong>
+          </article>
+        </section>
+      </section>
+
+      <section id="categorias-section" class="admin-section hidden">
+        <div class="admin-header">
+          <div>
+            <p class="eyebrow">Gestión de categorías</p>
+            <h1>Categorías</h1>
+          </div>
+        </div>
+        <form id="category-form" class="form-card">
+          <input type="hidden" name="id" />
+          <div class="form-grid">
+            <label>Nombre <input name="nombre" required /></label>
+            <label>Descripción <input name="descripcion" required /></label>
+          </div>
+          <button type="submit" class="primary-button">Guardar categoría</button>
+        </form>
         <div class="table-panel">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Subject</th>
-                <th>Sin Classification</th>
-                <th>Access Tier</th>
-                <th>Soul Status</th>
-                <th>Actions</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
               </tr>
             </thead>
-            <tbody id="soul-table-body"></tbody>
+            <tbody id="categories-body"></tbody>
           </table>
         </div>
+      </section>
 
-        <div class="table-footer">
-          <span>Displaying 3 of 66,666 entities</span>
-          <div class="pagination">
-            <button>Previous Page</button>
-            <button class="primary">Next Page</button>
+      <section id="eventos-section" class="admin-section hidden">
+        <div class="admin-header">
+          <div>
+            <p class="eyebrow">Gestión de eventos</p>
+            <h1>Eventos</h1>
           </div>
+        </div>
+        <form id="event-form" class="form-card">
+          <input type="hidden" name="id" />
+          <div class="form-grid">
+            <label>Código <input name="codigo" required /></label>
+            <label>Nombre <input name="nombre" required /></label>
+            <label>Categoría <select name="categoriaId" required></select></label>
+            <label>Precio <input name="precio" type="number" min="0" required /></label>
+            <label>Fecha <input name="fecha" type="date" required /></label>
+            <label>Hora <input name="hora" type="time" required /></label>
+            <label>Ciudad <input name="ciudad" required /></label>
+            <label>Imagen URL <input name="imagen" placeholder="assets/img/evento.jpg" required /></label>
+            <label class="full-width">Descripción <textarea name="descripcion" rows="3" required></textarea></label>
+          </div>
+          <button type="submit" class="primary-button">Guardar evento</button>
+        </form>
+        <div class="table-panel scrollable">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Ciudad</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="events-body"></tbody>
+          </table>
         </div>
       </section>
 
-      <section class="action-grid">
-        <article class="action-card">
-          <h3>Soul Binding</h3>
-          <p>Forge a new contract for incoming residents.</p>
-          <button class="secondary-button">Initiate Pact</button>
-        </article>
-        <article class="action-card">
-          <h3>Mass Exorcism</h3>
-          <p>Bulk removal of low-priority or unruly spirits.</p>
-          <button class="danger-button">Purge Circle</button>
-        </article>
-        <article class="action-card">
-          <h3>Stage Config</h3>
-          <p>Modify theater layout and seating arrangements.</p>
-          <button class="secondary-button">Remodel Stage</button>
-        </article>
+      <section id="ventas-section" class="admin-section hidden">
+        <div class="admin-header">
+          <div>
+            <p class="eyebrow">Historial de ventas</p>
+            <h1>Ventas</h1>
+          </div>
+        </div>
+        <div class="table-panel scrollable">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Ciudad</th>
+                <th>Total</th>
+                <th>Detalle</th>
+              </tr>
+            </thead>
+            <tbody id="sales-body"></tbody>
+          </table>
+        </div>
       </section>
-
-      <footer class="admin-footer">
-        <p>1924 Conciertos Conectados · Theatrical Order No. 666</p>
-      </footer>
     </main>
   </div>
 
+  <script defer src="js/storage.js"></script>
   <script defer src="js/admin.js"></script>
 </body>
 </html>
