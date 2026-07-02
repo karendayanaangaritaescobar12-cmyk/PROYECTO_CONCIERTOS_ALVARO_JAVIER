@@ -41,7 +41,7 @@ const initialPaises = [
   { id: Date.now() + 139, nombre: 'China', ciudades: ['Pekín', 'Shanghái', 'Cantón', 'Shenzhen', 'Chengdú', 'Hong Kong'] },
   { id: Date.now() + 140, nombre: 'Chipre', ciudades: ['Nicosia', 'Limassol', 'Lárnaca', 'Pafos', 'Famagusta'] },
   { id: Date.now() + 141, nombre: 'Ciudad del Vaticano', ciudades: ['Ciudad del Vaticano'] },
-  { id: Date.now() + 142, nombre: 'Colombia', ciudades: ['Bogotá', 'Medellín', 'Cali', 'Barranquilla', 'Cartagena', 'Bucaramanga', 'Pereira', 'Manizales', 'Ibagué', 'Santa Marta', 'Villavicencio', 'Cúcuta', 'Neiva', 'Pasto', 'Armenia', 'Montería', 'Sincelejo', 'Popayán', 'Tunja'] },
+  { id: Date.now() + 142, nombre: 'Colombia', ciudades: ['Bogotá', 'Medellín', 'Cali', 'Barranquilla', 'Cartagena', 'Bucaramanga', 'Pereira', 'Manizales', 'Ibagué', 'Santa Marta', 'Villavicencio', 'Cúcuta', 'Neiva', 'Pasto', 'Armenia', 'Montería', 'Sincelejo', 'Popayán', 'Tunja', 'Palmira', 'Tuluá', 'Buga', 'Cartago', 'Girardot', 'Soacha', 'Zipaquirá', 'Facatativá', 'Chía', 'Sogamoso', 'Duitama', 'Riohacha', 'San Andrés', 'Leticia', 'Florencia', 'Quibdó', 'Yopal', 'Arauca', 'Mocoa', 'Puerto Carreño', 'Inírida', 'Mitú'] },
   { id: Date.now() + 143, nombre: 'Comoras', ciudades: ['Moroni', 'Mutsamudu', 'Fomboni', 'Domoni', 'Itsandra'] },
   { id: Date.now() + 144, nombre: 'Congo', ciudades: ['Brazzaville', 'Pointe-Noire', 'Dolisie', 'Nkayi', 'Ouesso'] },
   { id: Date.now() + 145, nombre: 'Corea del Norte', ciudades: ['Pionyang', 'Hamhung', 'Chongjin', 'Nampo', 'Wonsan', 'Sinuiju'] },
