@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conciertos Conectados</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>Conciertos Conectados</h1>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="admin.html">Administración</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="home-hero">
+      <h2>Bienvenido a tu proyecto de conciertos</h2>
+      <p>Esta es la vista pública. Usa el panel de administración para crear y editar eventos.</p>
+    </section>
+
+    <section id="event-list">
+      <h3>Próximos eventos</h3>
+      <div id="events"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Proyecto de conciertos · Página pública</p>
+  </footer>
+
+  <script defer src="js/data-seed.js"></script>
+  <script defer src="js/storage.js"></script>
+  <script defer src="js/components.js"></script>
+  <script defer src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+﻿/* estilo responsive para móviles */
+@media (max-width: 768px) {
+  .site-header nav {
+    float: none;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  .site-header a {
+    display: inline-block;
+    margin: 0 0.75rem;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+}
