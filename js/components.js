@@ -24,46 +24,37 @@ class EventoCard extends HTMLElement {
       <style>
         :host {
           display: block;
-          border-radius: 1.25rem;
+          border-radius: 1rem;
           overflow: hidden;
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          background: #ffffff;
+          border: 1px solid #e5e7eb;
+          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         :host(:hover) {
           transform: translateY(-4px);
-          box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+          box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
         }
 
         .card-image {
           width: 100%;
-          min-height: 180px;
+          height: 200px;
           object-fit: cover;
           display: block;
         }
 
         .card-body {
-          padding: 1.2rem;
-          display: grid;
-          gap: 0.75rem;
-        }
-
-        .meta {
-          font-size: 0.8rem;
-          color: rgba(255, 255, 255, 0.72);
+          padding: 1.25rem;
           display: flex;
-          justify-content: space-between;
-          gap: 0.5rem;
-          flex-wrap: wrap;
+          flex-direction: column;
+          gap: 0.6rem;
         }
 
         .categoria {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          color: #f7d85d;
-          font-size: 0.8rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: #6366f1;
           text-transform: uppercase;
           letter-spacing: 0.12em;
         }
@@ -71,52 +62,72 @@ class EventoCard extends HTMLElement {
         h3 {
           margin: 0;
           font-size: 1.2rem;
-          color: #fff;
+          color: #1f2937;
+          line-height: 1.3;
         }
 
         p {
           margin: 0;
-          color: rgba(255, 255, 255, 0.78);
-          font-size: 0.95rem;
+          color: #6b7280;
+          font-size: 0.9rem;
           line-height: 1.5;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .meta {
+          font-size: 0.85rem;
+          color: #6b7280;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 0.5rem;
+          flex-wrap: wrap;
+          padding: 0.5rem 0;
+          border-top: 1px solid #f3f4f6;
+          margin-top: 0.25rem;
         }
 
         .price {
-          color: #f7d34e;
+          color: #059669;
           font-weight: 700;
+          font-size: 1.1rem;
         }
 
         .actions {
           display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 0.75rem;
-          flex-wrap: wrap;
         }
 
         .add-button {
           width: 100%;
           border: none;
-          border-radius: 0.95rem;
-          padding: 0.95rem 1rem;
-          background: #f7d34e;
-          color: #240b00;
-          font-weight: 700;
+          border-radius: 0.6rem;
+          padding: 0.75rem 1rem;
+          background: #6366f1;
+          color: #ffffff;
+          font-weight: 600;
+          font-size: 0.9rem;
           cursor: pointer;
-          transition: transform 0.2s ease;
+          transition: background 0.2s ease;
         }
 
         .add-button:hover {
-          transform: translateY(-1px);
+          background: #4f46e5;
+        }
+
+        .add-button:active {
+          transform: scale(0.98);
         }
       </style>
-      <img class="card-image" src="${imagen}" alt="${nombre}" />
+      <img class="card-image" src="${imagen}" alt="${nombre}" loading="lazy" />
       <div class="card-body">
         <div class="categoria">${categoria}</div>
         <h3>${nombre}</h3>
         <p>${descripcion}</p>
         <div class="meta">
-          <span>${fecha} · ${hora}</span>
+          <span>${fecha} · ${hora} · ${ciudad}</span>
           <span class="price">${precio}</span>
         </div>
         <div class="actions">

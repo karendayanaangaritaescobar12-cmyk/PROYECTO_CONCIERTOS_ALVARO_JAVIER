@@ -51,6 +51,21 @@
         <h2>Próximos conciertos</h2>
         <div id="events" class="events-grid"></div>
       </section>
+
+      <section id="contacto" class="contact-section">
+        <h2>Contacto</h2>
+        <p class="contact-desc">¿Tienes preguntas o sugerencias? Escríbenos y te responderemos a la brevedad.</p>
+        <form id="contact-form" class="contact-form">
+          <div class="form-grid">
+            <label>Nombre <input name="nombre" required /></label>
+            <label>Email <input name="email" type="email" required /></label>
+          </div>
+          <label>Asunto <input name="asunto" required /></label>
+          <label>Mensaje <textarea name="mensaje" rows="4" required></textarea></label>
+          <button type="submit" class="primary-button">Enviar mensaje</button>
+          <p id="contact-message" class="success-message hidden"></p>
+        </form>
+      </section>
     </section>
 
     <aside class="cart-panel hidden" id="cart-panel">
@@ -59,7 +74,7 @@
           <p class="eyebrow">Carrito</p>
           <h2>Resumen de compra</h2>
         </div>
-        <button id="close-cart" class="icon-button">Cerrar</button>
+        <button id="close-cart" class="cart-close-button" type="button">Cerrar</button>
       </div>
 
       <div id="cart-items" class="cart-items"></div>
@@ -88,6 +103,7 @@
   </main>
 
   <script defer src="js/storage.js"></script>
+  <script defer src="js/registro.js"></script>
   <script defer src="js/data-seed.js"></script>
   <script defer src="js/components.js"></script>
   <script defer src="js/cart.js"></script>

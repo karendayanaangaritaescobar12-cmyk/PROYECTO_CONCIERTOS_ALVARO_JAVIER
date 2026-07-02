@@ -22,6 +22,8 @@ const eventForm = document.getElementById('event-form');
 const eventCategorySelect = eventForm?.querySelector('select[name="categoriaId"]');
 const eventsBody = document.getElementById('events-body');
 const salesBody = document.getElementById('sales-body');
+const mensajesSection = document.getElementById('mensajes-section');
+const messagesBody = document.getElementById('messages-body');
 
 function isLoginPage() {
   return !!loginForm;
@@ -68,6 +70,7 @@ function showLogin() {
   if (categoriasSection) categoriasSection.classList.add('hidden');
   if (eventosSection) eventosSection.classList.add('hidden');
   if (ventasSection) ventasSection.classList.add('hidden');
+  if (mensajesSection) mensajesSection.classList.add('hidden');
   if (logoutButton) logoutButton.classList.add('hidden');
   navLinks.forEach(link => link.classList.remove('active'));
   if (loginError) {
@@ -87,6 +90,7 @@ function showSection(sectionId) {
     if (categoriasSection) categoriasSection.classList.add('hidden');
     if (eventosSection) eventosSection.classList.add('hidden');
     if (ventasSection) ventasSection.classList.add('hidden');
+    if (mensajesSection) mensajesSection.classList.add('hidden');
   }
 
   const section = document.getElementById(`${sectionId}-section`);
@@ -114,6 +118,10 @@ function showSection(sectionId) {
 
   if (sectionId === 'ventas') {
     renderVentas();
+  }
+
+  if (sectionId === 'mensajes') {
+    renderMensajes();
   }
 }
 
@@ -205,6 +213,30 @@ function renderEventos() {
         </tr>
       `;
     })
+    .join('');
+}
+
+function renderMensajes() {
+  const contactos = typeof obtenerContactos === 'function' ? obtenerContactos() : [];
+  if (!messagesBody) return;
+
+  if (!contactos.length) {
+    messagesBody.innerHTML = '<tr><td colspan="5">No hay mensajes de contacto.</td></tr>';
+    return;
+  }
+
+  const ordenados = contactos.slice().sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+  messagesBody.innerHTML = ordenados
+    .map(msg => `
+      <tr>
+        <td>${new Date(msg.fecha).toLocaleString('es-CO')}</td>
+        <td>${msg.nombre}</td>
+        <td>${msg.email}</td>
+        <td>${msg.asunto}</td>
+        <td>${msg.mensaje}</td>
+      </tr>
+    `)
     .join('');
 }
 
@@ -461,6 +493,22 @@ function initLoginPage() {
   showLogin();
 }
 
+function exportJSON() {
+  const data = {
+    categorias: loadCategorias(),
+    eventos: loadEventos(),
+    ventas: loadVentas(),
+    contactos: typeof obtenerContactos === 'function' ? obtenerContactos() : []
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `conciertos_backup_${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 function initSpaPage() {
   logoutButton.addEventListener('click', handleLogout);
   navLinks.forEach(link => link.addEventListener('click', handleNavClick));
@@ -476,6 +524,8 @@ function initSpaPage() {
   } else {
     window.location.href = 'admin.html';
   }
+
+  document.getElementById('export-json')?.addEventListener('click', exportJSON);
 
   if (liveTime) {
     updateLiveTime();
@@ -506,6 +556,10 @@ function initStandalonePage() {
     renderVentas();
   }
 
+  if (messagesBody) {
+    renderMensajes();
+  }
+
   if (categoryForm) {
     categoryForm.addEventListener('submit', handleCategorySubmit);
     fillEventCategorySelect();
@@ -517,6 +571,8 @@ function initStandalonePage() {
   }
 
   updateDashboard();
+
+  document.getElementById('export-json')?.addEventListener('click', exportJSON);
 
   if (liveTime) {
     updateLiveTime();

@@ -97,6 +97,23 @@ function applyFilters() {
   renderEvents(filteredEventos);
 }
 
+function initContactForm() {
+  const form = document.getElementById('contact-form');
+  const msg = document.getElementById('contact-message');
+  if (!form) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries());
+    if (typeof guardarContacto === 'function') {
+      guardarContacto(data);
+    }
+    form.reset();
+    msg.textContent = 'Mensaje enviado con exito. Te contactaremos pronto.';
+    msg.classList.remove('hidden');
+    setTimeout(() => msg.classList.add('hidden'), 4000);
+  });
+}
+
 function initPublicView() {
   renderFilters();
   renderEvents(getEventos());
@@ -107,6 +124,7 @@ function initPublicView() {
   if (typeof initCartModule === 'function') {
     initCartModule();
   }
+  initContactForm();
 }
 
 document.addEventListener('DOMContentLoaded', initPublicView);

@@ -56,6 +56,18 @@ function ensureSeedData() {
         ciudad: 'Cali',
         imagen: 'https://images.unsplash.com/photo-1512362856338-5405fbe5e443?fit=crop&w=800&q=80',
         descripcion: 'Un show pop con artistas emergentes y sonidos energéticos.'
+      },
+      {
+        id: Date.now() + 14,
+        codigo: 'EVT004',
+        nombre: 'Digital Circus',
+        categoriaId: storedCategorias[8]?.id || initialCategories[8].id,
+        precio: 150000,
+        fecha: '2026-12-20',
+        hora: '21:00',
+        ciudad: 'Bogotá',
+        imagen: 'https://images.unsplash.com/photo-1516559828984-fef4973811b9?fit=crop&w=800&q=80',
+        descripcion: 'Un espectáculo circense digital con visuals, luces y música electrónica en vivo.'
       }
     ];
     saveEventos(seedEvents);

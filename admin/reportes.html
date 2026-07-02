@@ -22,6 +22,7 @@
       </nav>
       <button id="logout-button" class="sidebar-button" type="button">Cerrar sesión</button>
       <a href="../index.html" class="sidebar-button back-button" style="text-align:center;">Volver al inicio</a>
+      <button id="export-json" class="sidebar-button" type="button" style="margin-top:0.5rem;">Exportar JSON</button>
     </aside>
     <main class="admin-content">
       <div class="admin-header">
@@ -44,9 +45,31 @@
           <tbody id="sales-body"></tbody>
         </table>
       </div>
+
+      <div class="admin-header" style="margin-top:2rem;">
+        <div>
+          <p class="eyebrow">Buzón de mensajes</p>
+          <h1>Mensajes de contacto</h1>
+        </div>
+      </div>
+      <div class="table-panel">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Asunto</th>
+              <th>Mensaje</th>
+            </tr>
+          </thead>
+          <tbody id="messages-body"></tbody>
+        </table>
+      </div>
     </main>
   </div>
   <script defer src="../js/storage.js"></script>
+  <script defer src="../js/registro.js"></script>
   <script defer src="../js/data-seed.js"></script>
   <script defer src="../js/admin.js"></script>
 </body>

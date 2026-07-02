@@ -116,11 +116,19 @@ function handleCheckoutSubmit(event) {
   saveSales(sales);
   clearCart();
   form.reset();
-  const message = document.getElementById('checkout-message');
-  if (message) {
-    message.textContent = 'Compra registrada con éxito.';
-    message.classList.remove('hidden');
+  form.classList.add('hidden');
+  document.getElementById('checkout-button')?.classList.remove('hidden');
+  renderCart();
+  updateCartCount();
+  const msg = document.getElementById('checkout-message');
+  if (msg) {
+    msg.textContent = 'Compra registrada con éxito.';
+    msg.classList.remove('hidden');
   }
+  setTimeout(() => {
+    if (msg) msg.classList.add('hidden');
+    closeCartPanel();
+  }, 1500);
 }
 
 function loadSales() {
