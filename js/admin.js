@@ -1,4 +1,9 @@
-﻿const ADMIN_EMAIL = 'admin@gmail.com';
+﻿/**
+ * Módulo de administración: login, gestión de categorías, eventos,
+ * ventas, mensajes de contacto y exportación de datos.
+ */
+
+const ADMIN_EMAIL = 'admin@gmail.com';
 const ADMIN_PASSWORD = '123456';
 
 const loginForm = document.getElementById('login-form');
@@ -27,22 +32,41 @@ const salesBody = document.getElementById('sales-body');
 const mensajesSection = document.getElementById('mensajes-section');
 const messagesBody = document.getElementById('messages-body');
 
+/**
+ * Determina si la página actual es la de login.
+ * @returns {boolean} True si existe el formulario de login
+ */
 function isLoginPage() {
   return !!loginForm;
 }
 
+/**
+ * Determina si la página actual es la SPA de administración (eventos.html).
+ * @returns {boolean} True si existen secciones de menú o eventos
+ */
 function isSpaPage() {
   return !!(menuSection || (eventosSection && !isLoginPage()));
 }
 
+/**
+ * Obtiene la lista de categorías desde localStorage.
+ * @returns {Array} Lista de categorías
+ */
 function getCategoriasAdmin() {
   return loadCategorias() || [];
 }
 
+/**
+ * Obtiene la lista de países desde localStorage.
+ * @returns {Array} Lista de países
+ */
 function getPaisesAdmin() {
   return loadPaises() || [];
 }
 
+/**
+ * Llena el select de países con las opciones disponibles.
+ */
 function fillPaisSelect() {
   if (!paisSelect) return;
   const paises = getPaisesAdmin();
@@ -55,6 +79,11 @@ function fillPaisSelect() {
   });
 }
 
+/**
+ * Llena el select de ciudades según el país seleccionado.
+ * @param {number|string} paisId - Id del país seleccionado
+ * @param {string} [selectedCiudad] - Ciudad que debe quedar preseleccionada
+ */
 function fillCiudadSelect(paisId, selectedCiudad) {
   if (!ciudadSelect) return;
   ciudadSelect.innerHTML = '<option value="">Selecciona ciudad</option>';
@@ -70,20 +99,34 @@ function fillCiudadSelect(paisId, selectedCiudad) {
   });
 }
 
+/**
+ * Vincula el evento de cambio del select de país para actualizar las ciudades.
+ */
 function setupPaisListener() {
   paisSelect?.addEventListener('change', () => {
     fillCiudadSelect(paisSelect.value, '');
   });
 }
 
+/**
+ * Obtiene la lista de eventos desde localStorage.
+ * @returns {Array} Lista de eventos
+ */
 function getEventosAdmin() {
   return loadEventos() || [];
 }
 
+/**
+ * Obtiene la lista de ventas desde localStorage.
+ * @returns {Array} Lista de ventas
+ */
 function getVentasAdmin() {
   return loadVentas() || [];
 }
 
+/**
+ * Actualiza los indicadores del panel de dashboard con los datos actuales.
+ */
 function updateDashboard() {
   const categorias = getCategoriasAdmin();
   const eventos = getEventosAdmin();
@@ -97,12 +140,18 @@ function updateDashboard() {
   updateLiveTime();
 }
 
+/**
+ * Actualiza el reloj en vivo en la interfaz con la hora actual.
+ */
 function updateLiveTime() {
   if (liveTime) {
     liveTime.textContent = new Date().toLocaleTimeString('es-CO');
   }
 }
 
+/**
+ * Muestra la sección de login y oculta el resto de paneles.
+ */
 function showLogin() {
   if (loginSection) loginSection.classList.remove('hidden');
   if (dashboardSection) dashboardSection.classList.add('hidden');
@@ -117,6 +166,11 @@ function showLogin() {
   }
 }
 
+/**
+ * Muestra una sección del panel de administración y oculta las demás.
+ * Verifica la sesión activa antes de mostrar contenido protegido.
+ * @param {string} sectionId - Identificador de la sección (menu, dashboard, categorias, eventos, ventas, mensajes)
+ */
 function showSection(sectionId) {
   if (!loadSesionAdmin()) {
     window.location.href = 'admin.html';
@@ -166,18 +220,33 @@ function showSection(sectionId) {
   }
 }
 
+/**
+ * Persiste la lista de categorías.
+ * @param {Array} categorias - Lista de categorías a guardar
+ */
 function saveCategoryList(categorias) {
   saveCategorias(categorias);
 }
 
+/**
+ * Persiste la lista de eventos.
+ * @param {Array} eventos - Lista de eventos a guardar
+ */
 function saveEventList(eventos) {
   saveEventos(eventos);
 }
 
+/**
+ * Persiste la lista de ventas.
+ * @param {Array} ventas - Lista de ventas a guardar
+ */
 function saveSaleList(ventas) {
   saveVentas(ventas);
 }
 
+/**
+ * Renderiza la tabla de categorías con opciones de editar y eliminar.
+ */
 function renderCategorias() {
   const categorias = getCategoriasAdmin();
   if (!categoriesBody) return;
@@ -201,6 +270,9 @@ function renderCategorias() {
     .join('');
 }
 
+/**
+ * Llena el select de categorías en el formulario de eventos.
+ */
 function fillEventCategorySelect() {
   if (!eventCategorySelect) return;
   const categorias = getCategoriasAdmin();
@@ -214,6 +286,9 @@ function fillEventCategorySelect() {
   });
 }
 
+/**
+ * Reinicia el formulario de categorías y limpia el campo oculto de id.
+ */
 function resetCategoryForm() {
   if (!categoryForm) return;
   categoryForm.reset();
@@ -221,6 +296,9 @@ function resetCategoryForm() {
   if (idInput) idInput.value = '';
 }
 
+/**
+ * Reinicia el formulario de eventos, limpia selects y el campo oculto de id.
+ */
 function resetEventForm() {
   if (!eventForm) return;
   eventForm.reset();
@@ -230,6 +308,9 @@ function resetEventForm() {
   ciudadSelect.innerHTML = '<option value="">Selecciona ciudad</option>';
 }
 
+/**
+ * Renderiza la tabla de eventos con datos de categoría, país y acciones.
+ */
 function renderEventos() {
   const eventos = getEventosAdmin();
   if (!eventsBody) return;
@@ -261,6 +342,9 @@ function renderEventos() {
     .join('');
 }
 
+/**
+ * Renderiza la tabla de mensajes de contacto, ordenados por fecha descendente.
+ */
 function renderMensajes() {
   const contactos = typeof obtenerContactos === 'function' ? obtenerContactos() : [];
   if (!messagesBody) return;
@@ -285,6 +369,9 @@ function renderMensajes() {
     .join('');
 }
 
+/**
+ * Renderiza la tabla de ventas, ordenadas por fecha descendente.
+ */
 function renderVentas() {
   const ventas = getVentasAdmin();
   if (!salesBody) return;
@@ -309,6 +396,10 @@ function renderVentas() {
     .join('');
 }
 
+/**
+ * Rellena el formulario de categorías con los datos de una categoría existente.
+ * @param {number|string} categoriaId - Id de la categoría a editar
+ */
 function fillCategoryForm(categoriaId) {
   const categorias = getCategoriasAdmin();
   const categoria = categorias.find(c => Number(c.id) === Number(categoriaId));
@@ -323,6 +414,10 @@ function fillCategoryForm(categoriaId) {
   if (descripcionInput) descripcionInput.value = categoria.descripcion;
 }
 
+/**
+ * Rellena el formulario de eventos con los datos de un evento existente.
+ * @param {number|string} eventoId - Id del evento a editar
+ */
 function fillEventForm(eventoId) {
   const eventos = getEventosAdmin();
   const evento = eventos.find(e => Number(e.id) === Number(eventoId));
@@ -353,6 +448,10 @@ function fillEventForm(eventoId) {
   if (descripcionInput) descripcionInput.value = evento.descripcion;
 }
 
+/**
+ * Procesa el envío del formulario de categorías: crea o actualiza según exista id.
+ * @param {Event} event - Evento de submit del formulario
+ */
 function handleCategorySubmit(event) {
   event.preventDefault();
   const formData = new FormData(categoryForm);
@@ -384,6 +483,10 @@ function handleCategorySubmit(event) {
   updateDashboard();
 }
 
+/**
+ * Procesa el envío del formulario de eventos: crea o actualiza según exista id.
+ * @param {Event} event - Evento de submit del formulario
+ */
 function handleEventSubmit(event) {
   event.preventDefault();
   const formData = new FormData(eventForm);
@@ -446,6 +549,11 @@ function handleEventSubmit(event) {
   updateDashboard();
 }
 
+/**
+ * Maneja los clics en las tablas mediante delegación de eventos.
+ * Identifica la acción (editar, eliminar, ver detalle) por el atributo data-action.
+ * @param {Event} event - Evento de clic
+ */
 function handleTableClick(event) {
   const button = event.target.closest('button');
   if (!button) return;
@@ -498,6 +606,10 @@ Items:\n${venta.items.map(item => `- ${item.nombre} ($${item.precio})`).join('\n
   }
 }
 
+/**
+ * Maneja la navegación entre secciones del panel SPA.
+ * @param {Event} event - Evento de clic en enlace de navegación
+ */
 function handleNavClick(event) {
   event.preventDefault();
   const section = event.currentTarget.dataset.section;
@@ -509,6 +621,11 @@ function handleNavClick(event) {
   showSection(section);
 }
 
+/**
+ * Procesa el inicio de sesión del administrador.
+ * Verifica credenciales y redirige al panel si son correctas.
+ * @param {Event} event - Evento de submit del formulario de login
+ */
 function handleLogin(event) {
   event.preventDefault();
   const data = new FormData(loginForm);
@@ -524,11 +641,17 @@ function handleLogin(event) {
   }
 }
 
+/**
+ * Cierra la sesión del administrador y redirige al login.
+ */
 function handleLogout() {
   clearSesionAdmin();
   window.location.href = 'admin.html';
 }
 
+/**
+ * Inicializa la página de login: vincula eventos y redirige si ya hay sesión activa.
+ */
 function initLoginPage() {
   loginForm.addEventListener('submit', handleLogin);
   loginForm.addEventListener('input', () => {
@@ -543,6 +666,10 @@ function initLoginPage() {
   showLogin();
 }
 
+/**
+ * Exporta todos los datos (categorías, países, eventos, ventas, contactos)
+ * a un archivo JSON descargable con respaldo de la fecha actual.
+ */
 function exportJSON() {
   const data = {
     categorias: loadCategorias(),
@@ -560,6 +687,10 @@ function exportJSON() {
   URL.revokeObjectURL(url);
 }
 
+/**
+ * Genera un archivo JSON público con categorías, solo Colombia y eventos,
+ * listo para ser publicado en el sitio público.
+ */
 function publishJSON() {
   const paises = loadPaises();
   const colombia = paises.find(p => p.nombre === 'Colombia');
@@ -577,6 +708,9 @@ function publishJSON() {
   URL.revokeObjectURL(url);
 }
 
+/**
+ * Inicializa la vista SPA de administración con navegación, formularios y exportación.
+ */
 function initSpaPage() {
   logoutButton.addEventListener('click', handleLogout);
   navLinks.forEach(link => link.addEventListener('click', handleNavClick));
@@ -606,6 +740,10 @@ function initSpaPage() {
   }
 }
 
+/**
+ * Inicializa páginas administrativas independientes (no SPA)
+ * con sus tablas, formularios y botones de exportación.
+ */
 function initStandalonePage() {
   if (!loadSesionAdmin()) {
     window.location.href = 'admin.html';
@@ -656,6 +794,10 @@ function initStandalonePage() {
   }
 }
 
+/**
+ * Punto de entrada principal de la administración.
+ * Detecta el tipo de página (login, SPA o independiente) e inicializa lo correspondiente.
+ */
 function initAdminApp() {
   if (isLoginPage()) {
     initLoginPage();

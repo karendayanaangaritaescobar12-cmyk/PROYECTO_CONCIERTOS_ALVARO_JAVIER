@@ -1,16 +1,32 @@
-// Módulo de carrito y compra para la vista pública
+/**
+ * Módulo de carrito de compras y proceso de checkout para la vista pública.
+ * Gestiona la adición, eliminación y compra de eventos desde localStorage.
+ */
+
 const cartKey = 'conciertos_carrito';
 const salesKey = 'conciertos_ventas';
 
+/**
+ * Carga los items del carrito desde localStorage.
+ * @returns {Array} Items almacenados en el carrito
+ */
 function loadCart() {
   const raw = localStorage.getItem(cartKey);
   return raw ? JSON.parse(raw) : [];
 }
 
+/**
+ * Guarda el carrito en localStorage.
+ * @param {Array} cart - Items del carrito a persistir
+ */
 function saveCart(cart) {
   localStorage.setItem(cartKey, JSON.stringify(cart));
 }
 
+/**
+ * Agrega un evento al carrito si no existe ya.
+ * @param {Object} event - Evento a agregar
+ */
 function addToCart(event) {
   const cart = loadCart();
   const exists = cart.find(item => item.id === event.id);
@@ -20,6 +36,10 @@ function addToCart(event) {
   updateCartCount();
 }
 
+/**
+ * Elimina un evento del carrito por su id.
+ * @param {number|string} id - Identificador del evento a remover
+ */
 function removeFromCart(id) {
   const cart = loadCart().filter(item => item.id !== id);
   saveCart(cart);
@@ -27,17 +47,27 @@ function removeFromCart(id) {
   updateCartCount();
 }
 
+/**
+ * Vacía el carrito por completo.
+ */
 function clearCart() {
   saveCart([]);
   updateCartCount();
 }
 
+/**
+ * Actualiza el contador visual del carrito en la interfaz.
+ */
 function updateCartCount() {
   const count = loadCart().length;
   const cartCount = document.getElementById('cart-count');
   if (cartCount) cartCount.textContent = count;
 }
 
+/**
+ * Renderiza los items del carrito en el panel lateral.
+ * Muestra el total acumulado y un mensaje si está vacío.
+ */
 function renderCart() {
   const cartItems = document.getElementById('cart-items');
   const cartTotal = document.getElementById('cart-total');
@@ -70,6 +100,11 @@ function renderCart() {
   cartTotal.textContent = `$${total}`;
 }
 
+/**
+ * Maneja clics dentro del contenedor del carrito (delegación de eventos).
+ * Identifica botones de eliminar por su atributo data-remove.
+ * @param {Event} event - Evento de clic
+ */
 function handleCartButtons(event) {
   const target = event.target;
   const removeId = target.dataset.remove;
@@ -78,17 +113,28 @@ function handleCartButtons(event) {
   }
 }
 
+/**
+ * Abre el panel lateral del carrito y renderiza su contenido.
+ */
 function openCartPanel() {
   document.getElementById('cart-panel')?.classList.remove('hidden');
   document.getElementById('cart-backdrop')?.classList.add('active');
   renderCart();
 }
 
+/**
+ * Cierra el panel lateral del carrito y oculta el backdrop.
+ */
 function closeCartPanel() {
   document.getElementById('cart-panel')?.classList.add('hidden');
   document.getElementById('cart-backdrop')?.classList.remove('active');
 }
 
+/**
+ * Procesa el envío del formulario de checkout.
+ * Crea un registro de venta, lo persiste y limpia el carrito.
+ * @param {Event} event - Evento de submit del formulario
+ */
 function handleCheckoutSubmit(event) {
   event.preventDefault();
   const form = event.target;
@@ -133,15 +179,27 @@ function handleCheckoutSubmit(event) {
   }, 1500);
 }
 
+/**
+ * Carga las ventas almacenadas en localStorage.
+ * @returns {Array} Lista de ventas
+ */
 function loadSales() {
   const raw = localStorage.getItem(salesKey);
   return raw ? JSON.parse(raw) : [];
 }
 
+/**
+ * Guarda las ventas en localStorage.
+ * @param {Array} sales - Lista de ventas a persistir
+ */
 function saveSales(sales) {
   localStorage.setItem(salesKey, JSON.stringify(sales));
 }
 
+/**
+ * Inicializa el módulo del carrito: registra event listeners
+ * para abrir/cerrar panel, botones de eliminar y formulario de checkout.
+ */
 function initCartModule() {
   document.getElementById('open-cart')?.addEventListener('click', openCartPanel);
   document.getElementById('close-cart')?.addEventListener('click', closeCartPanel);

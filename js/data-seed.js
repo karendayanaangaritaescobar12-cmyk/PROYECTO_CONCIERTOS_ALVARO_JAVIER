@@ -1,4 +1,9 @@
-﻿// data-seed.js
+﻿/**
+ * Datos iniciales para poblar la aplicación al primer uso.
+ * Se ejecuta al cargar la página y siembra países, categorías y eventos
+ * de ejemplo cuando el almacenamiento local está vacío.
+ */
+
 const initialPaises = [
   { id: Date.now() + 101, nombre: 'Afganistán', ciudades: ['Kabul', 'Kandahar', 'Herat', 'Mazar-i-Sharif', 'Jalalabad'] },
   { id: Date.now() + 102, nombre: 'Albania', ciudades: ['Tirana', 'Durrës', 'Vlorë', 'Shkodër', 'Elbasan'] },
@@ -211,6 +216,10 @@ const initialCategories = [
   { id: Date.now() + 9, nombre: 'Festival', descripcion: 'Festivales multigénero al aire libre' }
 ];
 
+/**
+ * Inicializa los datos semilla si el almacenamiento local está vacío.
+ * Carga países, categorías, eventos de ejemplo y vacía carrito/ventas.
+ */
 function ensureSeedData() {
   const categorias = loadCategorias();
   if (!categorias.length) {

@@ -1,13 +1,24 @@
-﻿class EventoCard extends HTMLElement {
+﻿/**
+ * Web Component personalizado que representa una tarjeta visual de evento.
+ * Extiende HTMLElement y utiliza Shadow DOM para encapsular estilos.
+ */
+class EventoCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
   }
 
+  /**
+   * Se ejecuta automáticamente al insertar el elemento en el DOM.
+   */
   connectedCallback() {
     this.render();
   }
 
+  /**
+   * Construye el HTML interno del componente a partir de sus atributos.
+   * Renderiza imagen, nombre, descripción, meta y botón de agregar al carrito.
+   */
   render() {
     const id = this.getAttribute('data-id');
     const nombre = this.getAttribute('nombre') || '';

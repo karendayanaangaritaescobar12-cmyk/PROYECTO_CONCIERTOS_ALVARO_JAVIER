@@ -1,7 +1,16 @@
-﻿// main.js
+﻿/**
+ * Punto de entrada de la vista pública.
+ * Gestiona la carga de datos, filtros, búsqueda y renderizado de eventos.
+ */
+
 let dataCategorias = [];
 let dataEventos = [];
 
+/**
+ * Intenta cargar datos desde un archivo JSON remoto.
+ * Si falla la petición, recurre a los datos en localStorage.
+ * @returns {Promise<void>}
+ */
 async function loadDataFromJSON() {
   try {
     const res = await fetch('data/eventos.json');
@@ -24,6 +33,11 @@ const searchInput = document.getElementById('search-input');
 const categoryFilter = document.getElementById('category-filter');
 const cityFilter = document.getElementById('city-filter');
 
+/**
+ * Formatea un valor numérico como moneda colombiana (COP).
+ * @param {number} value - Precio a formatear
+ * @returns {string} Precio formateado (ej. $120.000)
+ */
 function formatPrice(value) {
   return new Intl.NumberFormat('es-CO', {
     style: 'currency',
@@ -32,18 +46,37 @@ function formatPrice(value) {
   }).format(value);
 }
 
+/**
+ * Obtiene las ciudades únicas a partir de una lista de eventos, ordenadas alfabéticamente.
+ * @param {Array} eventos - Lista de eventos
+ * @returns {string[]} Array de nombres de ciudades sin duplicados
+ */
 function getUniqueCities(eventos) {
   return [...new Set(eventos.map(evento => evento.ciudad))].sort();
 }
 
+/**
+ * Retorna las categorías disponibles, priorizando datos cargados desde JSON.
+ * @returns {Array} Lista de categorías
+ */
 function getCategorias() {
   return dataCategorias.length ? dataCategorias : (loadCategorias() || []);
 }
 
+/**
+ * Retorna los eventos disponibles, priorizando datos cargados desde JSON.
+ * @returns {Array} Lista de eventos
+ */
 function getEventos() {
   return dataEventos.length ? dataEventos : (loadEventos() || []);
 }
 
+/**
+ * Llena un elemento select con opciones a partir de un array de valores.
+ * @param {HTMLSelectElement|null} select - Elemento select a llenar
+ * @param {string[]} values - Valores para las opciones
+ * @param {string} defaultLabel - Texto para la opción por defecto
+ */
 function renderSelectOptions(select, values, defaultLabel) {
   if (!select) return;
   select.innerHTML = `<option value="">${defaultLabel}</option>`;
@@ -55,10 +88,17 @@ function renderSelectOptions(select, values, defaultLabel) {
   });
 }
 
+/**
+ * Retorna la lista de países desde localStorage.
+ * @returns {Array} Lista de países
+ */
 function getPaises() {
   return typeof loadPaises === 'function' ? (loadPaises() || []) : [];
 }
 
+/**
+ * Renderiza los filtros de categoría, país y ciudad en la interfaz pública.
+ */
 function renderFilters() {
   const categorias = getCategorias();
   renderSelectOptions(categoryFilter, categorias.map(c => c.nombre), 'Todas');
@@ -79,6 +119,10 @@ function renderFilters() {
   renderSelectOptions(cityFilter, ciudades, 'Todas');
 }
 
+/**
+ * Filtra los eventos según los criterios de búsqueda, categoría, país y ciudad.
+ * @returns {Array} Lista de eventos que coinciden con los filtros activos
+ */
 function filterEventos() {
   const eventos = getEventos();
   const search = searchInput?.value.trim().toLowerCase() || '';
@@ -95,6 +139,10 @@ function filterEventos() {
   });
 }
 
+/**
+ * Renderiza una lista de eventos como componentes <evento-card> en el contenedor.
+ * @param {Array} eventos - Lista de eventos a mostrar
+ */
 function renderEvents(eventos) {
   if (!eventsContainer) return;
   eventsContainer.innerHTML = '';
@@ -119,6 +167,10 @@ function renderEvents(eventos) {
   });
 }
 
+/**
+ * Maneja el evento personalizado 'add-to-cart' disparado por cada tarjeta.
+ * @param {CustomEvent} event - Evento con el id del evento en event.detail.id
+ */
 function handleAddToCart(event) {
   const payload = event.detail;
   if (!payload || !payload.id) return;
@@ -129,11 +181,18 @@ function handleAddToCart(event) {
   addToCart(evento);
 }
 
+/**
+ * Aplica los filtros actuales y vuelve a renderizar los eventos.
+ */
 function applyFilters() {
   const filteredEventos = filterEventos();
   renderEvents(filteredEventos);
 }
 
+/**
+ * Inicializa el formulario de contacto: guarda los datos al enviar
+ * y muestra un mensaje de confirmación temporal.
+ */
 function initContactForm() {
   const form = document.getElementById('contact-form');
   const msg = document.getElementById('contact-message');
@@ -151,6 +210,10 @@ function initContactForm() {
   });
 }
 
+/**
+ * Actualiza las ciudades del filtro al cambiar el país seleccionado.
+ * Filtra las ciudades que tienen eventos registrados en ese país.
+ */
 function onCountryChange() {
   const countryId = document.getElementById('country-filter')?.value;
   const eventos = getEventos();
@@ -169,6 +232,11 @@ function onCountryChange() {
   applyFilters();
 }
 
+/**
+ * Inicializa la vista pública: carga datos, renderiza filtros y eventos,
+ * y vincula los event listeners de búsqueda, filtros, carrito y contacto.
+ * @returns {Promise<void>}
+ */
 async function initPublicView() {
   await loadDataFromJSON();
   renderFilters();
