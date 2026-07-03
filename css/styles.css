@@ -656,8 +656,19 @@
    ========================================================================== */
 
 /* Cambiar el fondo global de la página pública para que sea oscuro */
+/* ==========================================================================
+   8. VISTA PÚBLICA / CLIENTE (Estilo "Sonic Revolution" con Fondo)
+   ========================================================================== */
+
+/* Cambiar el fondo global de la página pública para que tenga la imagen de fondo */
 body:not(.admin-page) {
-  background-color: #120505; /* El negro-rojizo de la imagen */
+  background-image: 
+    linear-gradient(to bottom, rgba(18, 5, 5, 0.85), rgba(18, 5, 5, 0.95)), 
+    url('../assets/img/dark\ hero..png'); /* <- Cambia esto por la ruta de tu fondo */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   color: #f0e6e6; /* Texto claro */
   font-family: 'Inter', sans-serif;
 }
