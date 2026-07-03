@@ -76,7 +76,6 @@ Plaintext
 │   ├── responsive.css
 │   └── styles.css
 ├── data/
-│   ├── enlaces.json
 │   └── eventos.json
 ├── js/
 │   ├── admin.js
