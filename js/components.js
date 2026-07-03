@@ -1,5 +1,4 @@
-﻿// components.js
-class EventoCard extends HTMLElement {
+﻿class EventoCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -24,17 +23,18 @@ class EventoCard extends HTMLElement {
       <style>
         :host {
           display: block;
-          border-radius: 1rem;
+          border-radius: 0.75rem;
           overflow: hidden;
-          background: #ffffff;
-          border: 1px solid #e5e7eb;
-          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
-          transition: transform 0.25s ease, box-shadow 0.25s ease;
+          background: #1c0b0b; /* Fondo oscuro que combina con tu CSS */
+          border: 1px solid rgba(229, 193, 88, 0.15); /* Borde dorado tenue */
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+          transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
 
         :host(:hover) {
-          transform: translateY(-4px);
-          box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+          transform: translateY(-5px);
+          border-color: #f9d24b; /* Dorado brillante en hover */
+          box-shadow: 0 12px 30px rgba(139, 24, 24, 0.4);
         }
 
         .card-image {
@@ -42,6 +42,7 @@ class EventoCard extends HTMLElement {
           height: 200px;
           object-fit: cover;
           display: block;
+          border-bottom: 1px solid rgba(229, 193, 88, 0.15);
         }
 
         .card-body {
@@ -54,21 +55,22 @@ class EventoCard extends HTMLElement {
         .categoria {
           font-size: 0.75rem;
           font-weight: 600;
-          color: #6366f1;
+          color: #f9d24b; /* Texto dorado para la categoría */
           text-transform: uppercase;
           letter-spacing: 0.12em;
         }
 
         h3 {
           margin: 0;
-          font-size: 1.2rem;
-          color: #1f2937;
+          font-family: 'Cinzel', serif; /* Tu fuente teatral */
+          font-size: 1.25rem;
+          color: #ffffff;
           line-height: 1.3;
         }
 
         p {
           margin: 0;
-          color: #6b7280;
+          color: #d8c28b; /* Crema dorado suave para la descripción */
           font-size: 0.9rem;
           line-height: 1.5;
           display: -webkit-box;
@@ -79,42 +81,46 @@ class EventoCard extends HTMLElement {
 
         .meta {
           font-size: 0.85rem;
-          color: #6b7280;
+          color: #eee2c5;
           display: flex;
           justify-content: space-between;
           align-items: center;
           gap: 0.5rem;
           flex-wrap: wrap;
           padding: 0.5rem 0;
-          border-top: 1px solid #f3f4f6;
+          border-top: 1px solid rgba(229, 193, 88, 0.1);
           margin-top: 0.25rem;
         }
 
         .price {
-          color: #059669;
+          color: #ffeea8;
           font-weight: 700;
           font-size: 1.1rem;
         }
 
         .actions {
           display: flex;
+          margin-top: 0.5rem;
         }
 
         .add-button {
           width: 100%;
-          border: none;
-          border-radius: 0.6rem;
+          border: 1px solid #f9d24b;
+          border-radius: 0.5rem;
           padding: 0.75rem 1rem;
-          background: #6366f1;
-          color: #ffffff;
+          background: #8b1818; /* Botón rojo infernal */
+          color: #ffeea8;
           font-weight: 600;
           font-size: 0.9rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
           cursor: pointer;
-          transition: background 0.2s ease;
+          transition: background 0.2s ease, box-shadow 0.2s ease;
         }
 
         .add-button:hover {
-          background: #4f46e5;
+          background: #a81f1f;
+          box-shadow: 0 0 10px rgba(139, 24, 24, 0.6);
         }
 
         .add-button:active {

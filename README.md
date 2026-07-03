@@ -51,25 +51,45 @@ Sistema de gestión y venta de entradas para conciertos con panel administrativo
 ## 📁 Estructura del Proyecto
 
 ```
-├── index.html                 # Página pública (cliente)
+Aquí tienes la estructura de carpetas actualizada en formato de texto, reflejando exactamente el orden de los archivos y carpetas, las extensiones de imagen adicionales (.avif, .webp, .jpeg) y la carpeta data/ con sus archivos JSON que aparecen en tu imagen:
+
+Plaintext
+
+
 ├── admin/
-│   ├── admin.html             # Login del panel administrativo
-│   ├── eventos.html           # SPA principal del admin
-│   ├── dashboard.html         # Dashboard independiente
-│   ├── categorias.html        # CRUD de categorías independiente
-│   └── reportes.html          # Reportes independiente
+│   ├── admin.html
+│   ├── categorias.html
+│   ├── dashboard.html
+│   ├── eventos.html
+│   └── reportes.html
+├── assets/img/
+│   ├── concierto.jpg
+│   ├── dark hero..png
+│   ├── dark mode.png
+│   ├── digital-circus.png
+│   ├── electro.avif
+│   ├── images.jpeg
+│   ├── regueton.webp
+│   ├── rock.webp
+│   └── salsa.jpg
 ├── css/
-│   ├── styles.css             # Estilos generales + tema Infernal
-│   └── responsive.css         # Adaptación responsive
+│   ├── responsive.css
+│   └── styles.css
+├── data/
+│   ├── enlaces.json
+│   └── eventos.json
 ├── js/
-│   ├── storage.js             # Capa de persistencia (localStorage)
-│   ├── registro.js            # Módulo de contactos y ventas
-│   ├── data-seed.js           # Datos semilla (197 países, 9 categorías, 4 eventos)
-│   ├── components.js          # Web Component <evento-card>
-│   ├── cart.js                # Módulo del carrito de compras
-│   ├── main.js                # Controlador de la vista pública
-│   └── admin.js               # Controlador del panel administrativo
-├── assets/img/                # Imágenes del tema
+│   ├── admin.js
+│   ├── cart.js
+│   ├── components.js
+│   ├── data-seed.js
+│   ├── main.js
+│   ├── registro.js
+│   └── storage.js
+├── .gitignore
+├── admin.html
+├── eventos.html
+├── index.html
 └── README.md
 ```
 

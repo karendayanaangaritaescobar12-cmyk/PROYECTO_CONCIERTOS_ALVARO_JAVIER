@@ -186,4 +186,3 @@ async function initPublicView() {
 
 document.addEventListener('DOMContentLoaded', initPublicView);
 
-
