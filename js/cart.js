@@ -145,6 +145,7 @@ function saveSales(sales) {
 function initCartModule() {
   document.getElementById('open-cart')?.addEventListener('click', openCartPanel);
   document.getElementById('close-cart')?.addEventListener('click', closeCartPanel);
+  document.getElementById('cart-backdrop')?.addEventListener('click', closeCartPanel);
   document.getElementById('cart-items')?.addEventListener('click', handleCartButtons);
   document.getElementById('checkout-button')?.addEventListener('click', () => {
     document.getElementById('checkout-form')?.classList.remove('hidden');
