@@ -560,6 +560,23 @@ function exportJSON() {
   URL.revokeObjectURL(url);
 }
 
+function publishJSON() {
+  const paises = loadPaises();
+  const colombia = paises.find(p => p.nombre === 'Colombia');
+  const data = {
+    categorias: loadCategorias(),
+    paises: colombia ? [colombia] : [],
+    eventos: loadEventos()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'eventos.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 function initSpaPage() {
   logoutButton.addEventListener('click', handleLogout);
   navLinks.forEach(link => link.addEventListener('click', handleNavClick));
@@ -581,6 +598,7 @@ function initSpaPage() {
   }
 
   document.getElementById('export-json')?.addEventListener('click', exportJSON);
+  document.getElementById('publish-json')?.addEventListener('click', publishJSON);
 
   if (liveTime) {
     updateLiveTime();
@@ -630,6 +648,7 @@ function initStandalonePage() {
   updateDashboard();
 
   document.getElementById('export-json')?.addEventListener('click', exportJSON);
+  document.getElementById('publish-json')?.addEventListener('click', publishJSON);
 
   if (liveTime) {
     updateLiveTime();
