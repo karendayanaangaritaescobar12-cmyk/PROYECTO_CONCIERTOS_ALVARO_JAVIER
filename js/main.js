@@ -157,3 +157,5 @@ function initPublicView() {
 }
 
 document.addEventListener('DOMContentLoaded', initPublicView);
+
+
