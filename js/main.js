@@ -1,4 +1,24 @@
 ﻿// main.js
+let dataCategorias = [];
+let dataEventos = [];
+
+async function loadDataFromJSON() {
+  try {
+    const res = await fetch('data/eventos.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    dataCategorias = json.categorias || [];
+    dataEventos = json.eventos || [];
+    if (json.paises && typeof savePaises === 'function') {
+      const stored = loadPaises();
+      if (!stored.length) savePaises(json.paises);
+    }
+  } catch {
+    dataCategorias = (typeof loadCategorias === 'function' && loadCategorias()) || [];
+    dataEventos = (typeof loadEventos === 'function' && loadEventos()) || [];
+  }
+}
+
 const eventsContainer = document.getElementById('events');
 const searchInput = document.getElementById('search-input');
 const categoryFilter = document.getElementById('category-filter');
@@ -17,11 +37,11 @@ function getUniqueCities(eventos) {
 }
 
 function getCategorias() {
-  return loadCategorias() || [];
+  return dataCategorias.length ? dataCategorias : (loadCategorias() || []);
 }
 
 function getEventos() {
-  return loadEventos() || [];
+  return dataEventos.length ? dataEventos : (loadEventos() || []);
 }
 
 function renderSelectOptions(select, values, defaultLabel) {
@@ -149,7 +169,8 @@ function onCountryChange() {
   applyFilters();
 }
 
-function initPublicView() {
+async function initPublicView() {
+  await loadDataFromJSON();
   renderFilters();
   renderEvents(getEventos());
   eventsContainer?.addEventListener('add-to-cart', handleAddToCart);

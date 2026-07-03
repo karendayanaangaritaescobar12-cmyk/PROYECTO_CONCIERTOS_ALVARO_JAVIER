@@ -1,0 +1,70 @@
+{
+  "categorias": [
+    { "id": 1001, "nombre": "Rock", "descripcion": "Conciertos de rock y metal" },
+    { "id": 1002, "nombre": "Electrónica", "descripcion": "Eventos con DJs y música electrónica" },
+    { "id": 1003, "nombre": "Pop", "descripcion": "Conciertos comerciales y festivales pop" },
+    { "id": 1004, "nombre": "Jazz", "descripcion": "Música jazz y blues en vivo" },
+    { "id": 1005, "nombre": "Clásica", "descripcion": "Conciertos de música clásica y orquestal" },
+    { "id": 1006, "nombre": "Reguetón", "descripcion": "Artistas de reguetón y trap latino" },
+    { "id": 1007, "nombre": "Salsa", "descripcion": "Salsa, bachata y ritmos caribeños" },
+    { "id": 1008, "nombre": "Indie", "descripcion": "Bandas independientes y alternativas" },
+    { "id": 1009, "nombre": "Festival", "descripcion": "Festivales multigénero al aire libre" }
+  ],
+  "paises": [
+    { "id": 2001, "nombre": "Colombia", "ciudades": ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena", "Bucaramanga", "Pereira", "Manizales", "Ibagué", "Santa Marta", "Villavicencio", "Cúcuta", "Neiva", "Pasto", "Armenia", "Montería", "Sincelejo", "Popayán", "Tunja", "Palmira", "Tuluá", "Buga", "Cartago", "Girardot", "Soacha", "Zipaquirá", "Facatativá", "Chía", "Sogamoso", "Duitama", "Riohacha", "San Andrés", "Leticia", "Florencia", "Quibdó", "Yopal", "Arauca", "Mocoa", "Puerto Carreño", "Inírida", "Mitú"] }
+  ],
+  "eventos": [
+    {
+      "id": 3001,
+      "codigo": "EVT001",
+      "nombre": "Infernal Rock Night",
+      "categoriaId": 1001,
+      "paisId": 2001,
+      "precio": 120000,
+      "fecha": "2026-11-10",
+      "hora": "20:00",
+      "ciudad": "Bogotá",
+      "imagen": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?fit=crop&w=800&q=80",
+      "descripcion": "Una noche de rock con bandas nacionales y sonido potente."
+    },
+    {
+      "id": 3002,
+      "codigo": "EVT002",
+      "nombre": "Electro Vibes",
+      "categoriaId": 1002,
+      "paisId": 2001,
+      "precio": 95000,
+      "fecha": "2026-12-05",
+      "hora": "22:00",
+      "ciudad": "Medellín",
+      "imagen": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?fit=crop&w=800&q=80",
+      "descripcion": "Festival con DJs, luces láser y ambiente nocturno."
+    },
+    {
+      "id": 3003,
+      "codigo": "EVT003",
+      "nombre": "Pop Dreams",
+      "categoriaId": 1003,
+      "paisId": 2001,
+      "precio": 108000,
+      "fecha": "2026-10-18",
+      "hora": "19:30",
+      "ciudad": "Cali",
+      "imagen": "https://images.unsplash.com/photo-1512362856338-5405fbe5e443?fit=crop&w=800&q=80",
+      "descripcion": "Un show pop con artistas emergentes y sonidos energéticos."
+    },
+    {
+      "id": 3004,
+      "codigo": "EVT004",
+      "nombre": "Digital Circus",
+      "categoriaId": 1009,
+      "paisId": 2001,
+      "precio": 150000,
+      "fecha": "2026-12-20",
+      "hora": "21:00",
+      "ciudad": "Bogotá",
+      "imagen": "https://images.unsplash.com/photo-1516559828984-fef4973811b9?fit=crop&w=800&q=80",
+      "descripcion": "Un espectáculo circense digital con visuals, luces y música electrónica en vivo."
+    }
+  ]
+}
