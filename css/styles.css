@@ -668,6 +668,39 @@ body:not(.admin-page) h1 {
 }
 
 /* cart styling */
+.cart-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+}
+
+.cart-backdrop.active {
+  display: block;
+}
+
+.cart-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.cart-panel.hidden {
+  display: none;
+}
+
 .cart-header {
   display: flex;
   justify-content: space-between;

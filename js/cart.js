@@ -80,11 +80,13 @@ function handleCartButtons(event) {
 
 function openCartPanel() {
   document.getElementById('cart-panel')?.classList.remove('hidden');
+  document.getElementById('cart-backdrop')?.classList.add('active');
   renderCart();
 }
 
 function closeCartPanel() {
   document.getElementById('cart-panel')?.classList.add('hidden');
+  document.getElementById('cart-backdrop')?.classList.remove('active');
 }
 
 function handleCheckoutSubmit(event) {
