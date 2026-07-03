@@ -1,131 +1,190 @@
-# 🎵 PROYECTO CONCIERTOS - Infernal Management
+# PROYECTO CONCIERTOS - Infernal Management
 
-Sistema de gestión y venta de entradas para conciertos con panel administrativo y vista pública. Desarrollado únicamente con HTML, CSS y JavaScript (sin frameworks).
+Sistema de gestión y venta de entradas para conciertos con panel administrativo y vista pública. Desarrollado únicamente con HTML, CSS y JavaScript (sin frameworks, sin librerías externas).
 
-## ✨ Características
+## Características
 
-### 🌐 Vista Pública (`index.html`)
-- Exploración de eventos con tarjetas visuales (imagen, categoría, precio, fecha, ciudad)
-- Búsqueda por nombre y filtros por categoría y ciudad
-- Carrito de compras lateral con total y eliminación de items
-- Proceso de checkout con formulario de datos del comprador
-- Formulario de contacto con almacenamiento local
-- Componente web personalizado `<evento-card>`
+### Vista Publica (index.html)
+- Exploracion de eventos con tarjetas visuales (imagen, categoria, precio, fecha, ciudad)
+- Busqueda por nombre, filtros por categoria, pais y ciudad
+- Filtro dinamico: al seleccionar un pais, las ciudades se actualizan automaticamente
+- Carga de datos desde `data/eventos.json` (todos los usuarios ven los mismos eventos)
+- Web Component personalizado `<evento-card>` con Shadow DOM
+- Carrito de compras como ventana flotante con total y eliminacion de items
+- Checkout con formulario de datos del comprador
+- Formulario de contacto con almacenamiento en localStorage
 
-### 🔐 Panel Administrativo (`admin/`)
-- **Autenticación**: Login con credenciales fijas y sesión en localStorage
-- **Dashboard**: Métricas en tiempo real (conteo de categorías, eventos, ventas, ingresos) + reloj en vivo
-- **CRUD de Categorías**: Crear, editar, eliminar categorías (eliminación en cascada de eventos asociados)
-- **CRUD de Eventos**: Formulario completo con selector dinámico de país → ciudad, fecha, hora, precio, imagen
-- **Gestión de Ventas**: Tabla de ventas ordenadas por fecha con detalle por compra
-- **Buzón de Mensajes**: Visualización de mensajes del formulario de contacto
-- **Exportar Datos**: Descarga de respaldo JSON con todas las categorías, países, eventos, ventas y contactos
-- **Navegación**: Arquitectura SPA en `eventos.html` + páginas independientes para Dashboard, Categorías y Reportes
+### Panel Administrativo (admin/)
+- **Autenticacion**: Login con credenciales fijas y sesion en localStorage
+- **Dashboard**: Metricas en tiempo real (categorias, eventos, ventas, ingresos) + reloj en vivo
+- **CRUD de Categorias**: Crear, editar, eliminar (eliminacion en cascada de eventos asociados)
+- **CRUD de Eventos**: Formulario con selector dinamico pais -> ciudad, fecha, hora, precio, imagen
+- **Gestion de Ventas**: Tabla de ventas ordenadas por fecha con detalle de cada compra
+- **Buzon de Mensajes**: Visualizacion de mensajes del formulario de contacto
+- **Exportar JSON**: Descarga de respaldo completo (categorias, paises, eventos, ventas, contactos)
+- **Publicar cambios**: Descarga `eventos.json` para reemplazar el archivo publico y compartir los cambios con todos los usuarios
+- **Navegacion**: SPA en `eventos.html` + paginas independientes para Dashboard, Categorias y Reportes
 
-## 🛠️ Tecnologías
+## Tecnologias
 
-- **HTML5** semántico
-- **CSS3** con tema oscuro "Infernal" (variables CSS, glassmorphism, animaciones)
-- **JavaScript** vanilla (ES6+)
-- **localStorage** para persistencia de datos
-- **Custom Elements** (Web Components) para tarjetas de eventos
-- **Responsive Design** con `responsive.css`
+- HTML5 semantico
+- CSS3 con tema oscuro "Infernal" (variables CSS, glassmorphism, animaciones)
+- JavaScript vanilla (ES6+)
+- localStorage para persistencia de datos administrativos
+- Custom Elements (Web Components) con Shadow DOM para tarjetas de eventos
+- Fetch API para carga asincrona de datos publicos
+- Responsive Design con `responsive.css`
 
-## 🚀 Instalación y Uso
+## Instalacion y Uso
 
-1. Clona el repositorio:
-   ```bash
-   git clone <url-del-repositorio>
-   cd PROYECTO_CONCIERTOS_ALVARO_JAVIER
-   ```
+1. Abre `index.html` en tu navegador para la vista publica.
+2. Accede al panel admin desde el enlace "Administracion" o ve a `admin/admin.html`
+3. **Email:** `admin@gmail.com` | **Contrasena:** `123456`
 
-2. Abre `index.html` en tu navegador para la vista pública.
+> No requiere servidor ni dependencias. Funciona directamente desde el sistema de archivos.
 
-3. Accede al panel admin:
-   - Ve a `admin/admin.html` o haz clic en "Administración" en el header
-   - **Email:** `admin@gmail.com`
-   - **Contraseña:** `123456`
-
-> No requiere servidor ni dependencias externas. Todo funciona directamente en el navegador.
-
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
-Aquí tienes la estructura de carpetas actualizada en formato de texto, reflejando exactamente el orden de los archivos y carpetas, las extensiones de imagen adicionales (.avif, .webp, .jpeg) y la carpeta data/ con sus archivos JSON que aparecen en tu imagen:
-
-Plaintext
-
-
+├── index.html                          # Pagina publica (cliente)
+├── admin.html                          # Redireccionador a admin/
+├── eventos.html                        # Redireccionador a admin/
 ├── admin/
-│   ├── admin.html
-│   ├── categorias.html
-│   ├── dashboard.html
-│   ├── eventos.html
-│   └── reportes.html
-├── assets/img/
-│   ├── concierto.jpg
-│   ├── dark hero..png
-│   ├── dark mode.png
-│   ├── digital-circus.png
-│   ├── electro.avif
-│   ├── images.jpeg
-│   ├── regueton.webp
-│   ├── rock.webp
-│   └── salsa.jpg
+│   ├── admin.html                      # Login
+│   ├── eventos.html                    # SPA principal (dashboard, categorias, eventos, ventas, mensajes)
+│   ├── dashboard.html                  # Dashboard independiente
+│   ├── categorias.html                 # CRUD de categorias independiente
+│   └── reportes.html                   # Reportes independiente
 ├── css/
-│   ├── responsive.css
-│   └── styles.css
-├── data/
-│   └── eventos.json
+│   ├── styles.css                      # Estilos generales + tema Infernal
+│   └── responsive.css                  # Adaptacion responsive
 ├── js/
-│   ├── admin.js
-│   ├── cart.js
-│   ├── components.js
-│   ├── data-seed.js
-│   ├── main.js
-│   ├── registro.js
-│   └── storage.js
-├── .gitignore
-├── admin.html
-├── eventos.html
-├── index.html
+│   ├── storage.js                      # Capa de persistencia (localStorage)
+│   ├── registro.js                     # Modulo de contactos y ventas
+│   ├── data-seed.js                    # Datos semilla (197 paises, 9 categorias, 4 eventos)
+│   ├── components.js                   # Web Component <evento-card>
+│   ├── cart.js                         # Modulo del carrito de compras
+│   ├── main.js                         # Controlador de la vista publica
+│   └── admin.js                        # Controlador del panel administrativo
+├── data/
+│   └── eventos.json                    # Datos publicos (categorias, paises, eventos)
+├── assets/img/                         # Imagenes del tema
 └── README.md
 ```
 
-## 💾 Datos en localStorage
+## Web Component `<evento-card>`
 
-| Clave | Contenido |
-|---|---|
-| `conciertos_categorias` | Array de categorías `{ id, nombre, descripcion }` |
-| `conciertos_paises` | Array de países `{ id, nombre, ciudades[] }` |
-| `conciertos_eventos` | Array de eventos `{ id, codigo, nombre, categoriaId, paisId, precio, fecha, hora, ciudad, imagen, descripcion }` |
-| `conciertos_carrito` | Array de eventos agregados al carrito |
-| `conciertos_ventas` | Array de ventas `{ id, fecha, cliente, ciudad, items[], total }` |
-| `conciertos_sesion_admin` | Objeto `{ email }` de sesión activa |
-| `registro_contactos` | Array de mensajes `{ id, fecha, nombre, email, asunto, mensaje }` |
+### Archivo: `js/components.js`
 
-## 🔄 Flujo de Scripts
+Componente personalizado con Shadow DOM que renderiza tarjetas de eventos.
 
-**Vista pública** (`index.html`):
+### Atributos
+
+| Atributo     | Descripcion                         |
+|--------------|-------------------------------------|
+| `data-id`    | ID unico del evento                 |
+| `nombre`     | Nombre del evento                   |
+| `ciudad`     | Ciudad del evento                   |
+| `fecha`      | Fecha (YYYY-MM-DD)                  |
+| `hora`       | Hora (HH:MM)                        |
+| `precio`     | Precio formateado (incluye simbolo) |
+| `imagen`     | URL de la imagen                    |
+| `categoria`  | Nombre de la categoria              |
+| `descripcion`| Descripcion del evento              |
+
+### Shadow DOM Structure
+
 ```
-storage.js → registro.js → data-seed.js → components.js → cart.js → main.js
+<article class="card">
+  <img class="card-image" src="..." alt="..." loading="lazy" />
+  <span class="card-category">Categoria</span>
+  <div class="card-body">
+    <h3 class="card-title">Nombre</h3>
+    <p class="card-desc">Descripcion</p>
+    <div class="card-meta">
+      <span class="meta-date">Fecha</span>
+      <span class="meta-time">Hora</span>
+      <span class="meta-city">Ciudad</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-price">Precio</span>
+      <button class="card-button">Agregar al carrito</button>
+    </div>
+  </div>
+</article>
 ```
 
-**Panel admin** (`admin/*.html`):
+### Eventos
+
+El boton "Agregar al carrito" dispara un `CustomEvent('add-to-cart')` con `detail: { id }` que burbujea hasta el contenedor principal.
+
+## Datos Publicos vs Locales
+
+### Carga de datos (`main.js`)
+
+1. Al cargar la pagina, se intenta obtener `data/eventos.json` via `fetch()`
+2. Si el fetch es exitoso, se usan esos datos (categorias, paises, eventos)
+3. Si falla (archivo no encontrado), se cae en localStorage como respaldo
+4. Los paises del JSON se guardan en localStorage si no existen
+
+### Flujo de publicacion
+
+1. El admin edita eventos en el panel
+2. Hace clic en "Publicar cambios"
+3. Se descarga un archivo `eventos.json` con las categorias, Colombia con sus ciudades y los eventos actuales
+4. Reemplaza manualmente `data/eventos.json` con el archivo descargado
+5. Todos los usuarios ven los cambios al recargar la pagina
+
+## localStorage
+
+| Clave                      | Contenido                                  |
+|----------------------------|--------------------------------------------|
+| `conciertos_categorias`    | Array de categorias                        |
+| `conciertos_paises`        | Array de paises con ciudades               |
+| `conciertos_eventos`       | Array de eventos                           |
+| `conciertos_carrito`       | Array del carrito de compras               |
+| `conciertos_ventas`        | Array de ventas realizadas                 |
+| `conciertos_sesion_admin`  | Objeto `{ email }` de sesion activa        |
+| `registro_contactos`       | Array de mensajes de contacto              |
+
+## Flujo de Scripts
+
+### Vista publica (index.html)
+
 ```
-storage.js → registro.js → data-seed.js → admin.js
+storage.js  (define load/save para localStorage)
+    ->
+registro.js  (contactos y ventas)
+    ->
+data-seed.js  (datos semilla si localStorage vacio)
+    ->
+components.js  (define <evento-card>)
+    ->
+cart.js  (carrito y checkout)
+    ->
+main.js  (controlador principal, async: fetch JSON -> render)
 ```
 
-## 🌍 Países Incluidos
+### Panel admin (admin/*.html)
 
-197 países con sus principales ciudades. Los países se cargan automáticamente al iniciar la aplicación si no existen en localStorage. Para restablecerlos, limpia el localStorage desde la consola del navegador:
+```
+storage.js -> registro.js -> data-seed.js -> admin.js
+```
+
+## Países Incluidos
+
+197 paises con sus principales ciudades. Se cargan automaticamente desde `data-seed.js` si no existen en localStorage. Para restablecerlos:
 
 ```js
 localStorage.removeItem('conciertos_paises');
+location.reload();
 ```
 
-Luego recarga la página.
+## Credenciales Admin
 
-## 👥 Créditos
+- **Email:** `admin@gmail.com`
+- **Contrasena:** `123456`
 
-Proyecto desarrollado por Álvaro y Javier como sistema de gestión de conciertos.
+## Creditos
+
+Proyecto desarrollado por Alvaro y Javier como sistema de gestion de conciertos.
