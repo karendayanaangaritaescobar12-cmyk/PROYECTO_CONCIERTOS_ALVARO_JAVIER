@@ -27,7 +27,6 @@
      line-height: 1.5;
    }
    
-   /* Helper indispensable para el control de secciones con JavaScript */
    .hidden {
      display: none !important;
    }
@@ -95,7 +94,7 @@
      background: rgba(255, 255, 255, 0.02);
    }
    
-   /* Formularios Globales en Modo Oscuro */
+   /* Formularios Globales */
    .form-grid {
      display: grid;
      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -593,7 +592,7 @@
      font-size: 0.95rem;
    }
    
-   /* Acciones de filas de tabla (Suelen ser botones o enlaces de borrar/editar) */
+   /* Acciones de filas de tabla botones o enlaces de borrar/editar) */
    .data-table td a, 
    .data-table td button {
      color: var(--dorado-brillante);
@@ -660,16 +659,16 @@
    8. VISTA PÚBLICA / CLIENTE (Estilo "Sonic Revolution" con Fondo)
    ========================================================================== */
 
-/* Cambiar el fondo global de la página pública para que tenga la imagen de fondo */
+/* Cambiar el fondo global imagen de fondo */
 body:not(.admin-page) {
   background-image: 
     linear-gradient(to bottom, rgba(18, 5, 5, 0.85), rgba(18, 5, 5, 0.95)), 
-    url('../assets/img/dark\ hero..png'); /* <- Cambia esto por la ruta de tu fondo */
+    url('../assets/img/dark\ hero..png'); 
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  color: #f0e6e6; /* Texto claro */
+  color: #f0e6e6;
   font-family: 'Inter', sans-serif;
 }
 
@@ -1314,7 +1313,6 @@ body.admin-page {
 }
 
 /* Panel de filtros (Buscador, Categoría, Ciudad) */
-/* Nota: Si en tu HTML usas una clase contenedora para los filtros, puedes cambiar este selector */
 body:not(.admin-page) form,
 .filters-panel {
   background: rgba(255, 255, 255, 0.02);
@@ -1358,7 +1356,6 @@ body:not(.admin-page) select:focus {
 }
 
 /* Grid de Eventos / Próximos Conciertos */
-/* Asegúrate de que en tu HTML o JS las tarjetas se rendericen dentro de un contenedor con esta clase */
 .events-grid, 
 #events-container {
   display: grid;
@@ -1367,7 +1364,7 @@ body:not(.admin-page) select:focus {
   margin-top: 2rem;
 }
 
-/* Estilo de las tarjetas de los eventos (cuando aparezcan) */
+/* Estilo de las tarjetas de los eventos */
 .event-card {
   background: #1c0b0b;
   border: 1px solid rgba(229, 193, 88, 0.1);
