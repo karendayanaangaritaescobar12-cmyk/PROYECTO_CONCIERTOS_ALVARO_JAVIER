@@ -962,6 +962,7 @@ body:not(.admin-page) h1 {
 .form-grid input,
 .form-grid select,
 .form-grid textarea {
+  color: #110707;
   padding: 0.6rem 0.85rem;
   border: 1px solid #d1d5db;
   border-radius: 0.5rem;
@@ -1375,7 +1376,7 @@ body:not(.admin-page) select:focus {
   margin-top: 2rem;
 }
 
-/* Estilo de las tarjetas de los eventos */
+/* Estilo de las tarjetas de los eventos (cuando aparezcan) */
 .event-card {
   background: #1c0b0b;
   border: 1px solid rgba(229, 193, 88, 0.1);
