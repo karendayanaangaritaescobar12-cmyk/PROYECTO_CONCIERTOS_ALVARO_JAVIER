@@ -3,7 +3,7 @@
  * ventas, mensajes de contacto y exportación de datos.
  */
 
-const ADMIN_EMAIL = 'admin@gmail.com';
+const ADMIN_EMAIL = 'admin@mail';
 const ADMIN_PASSWORD = '123456';
 
 const loginForm = document.getElementById('login-form');
@@ -25,7 +25,6 @@ const categoryForm = document.getElementById('category-form');
 const categoriesBody = document.getElementById('categories-body');
 const eventForm = document.getElementById('event-form');
 const eventCategorySelect = eventForm?.querySelector('select[name="categoriaId"]');
-const paisSelect = document.getElementById('pais-select');
 const ciudadSelect = document.getElementById('ciudad-select');
 const eventsBody = document.getElementById('events-body');
 const salesBody = document.getElementById('sales-body');
@@ -54,58 +53,6 @@ function isSpaPage() {
  */
 function getCategoriasAdmin() {
   return loadCategorias() || [];
-}
-
-/**
- * Obtiene la lista de países desde localStorage.
- * @returns {Array} Lista de países
- */
-function getPaisesAdmin() {
-  return loadPaises() || [];
-}
-
-/**
- * Llena el select de países con las opciones disponibles.
- */
-function fillPaisSelect() {
-  if (!paisSelect) return;
-  const paises = getPaisesAdmin();
-  paisSelect.innerHTML = '<option value="">Selecciona país</option>';
-  paises.forEach(p => {
-    const opt = document.createElement('option');
-    opt.value = p.id;
-    opt.textContent = p.nombre;
-    paisSelect.appendChild(opt);
-  });
-}
-
-/**
- * Llena el select de ciudades según el país seleccionado.
- * @param {number|string} paisId - Id del país seleccionado
- * @param {string} [selectedCiudad] - Ciudad que debe quedar preseleccionada
- */
-function fillCiudadSelect(paisId, selectedCiudad) {
-  if (!ciudadSelect) return;
-  ciudadSelect.innerHTML = '<option value="">Selecciona ciudad</option>';
-  if (!paisId) return;
-  const pais = getPaisesAdmin().find(p => Number(p.id) === Number(paisId));
-  if (!pais) return;
-  pais.ciudades.forEach(c => {
-    const opt = document.createElement('option');
-    opt.value = c;
-    opt.textContent = c;
-    if (c === selectedCiudad) opt.selected = true;
-    ciudadSelect.appendChild(opt);
-  });
-}
-
-/**
- * Vincula el evento de cambio del select de país para actualizar las ciudades.
- */
-function setupPaisListener() {
-  paisSelect?.addEventListener('change', () => {
-    fillCiudadSelect(paisSelect.value, '');
-  });
 }
 
 /**
@@ -207,8 +154,6 @@ function showSection(sectionId) {
   if (sectionId === 'eventos') {
     renderEventos();
     fillEventCategorySelect();
-    fillPaisSelect();
-    ciudadSelect.innerHTML = '<option value="">Selecciona ciudad</option>';
   }
 
   if (sectionId === 'ventas') {
@@ -304,32 +249,28 @@ function resetEventForm() {
   eventForm.reset();
   const idInput = eventForm.querySelector('input[name="id"]');
   if (idInput) idInput.value = '';
-  fillPaisSelect();
-  ciudadSelect.innerHTML = '<option value="">Selecciona ciudad</option>';
 }
 
 /**
- * Renderiza la tabla de eventos con datos de categoría, país y acciones.
+ * Renderiza la tabla de eventos con datos de categoría, ciudad y acciones.
  */
 function renderEventos() {
   const eventos = getEventosAdmin();
   if (!eventsBody) return;
 
   if (!eventos.length) {
-    eventsBody.innerHTML = '<tr><td colspan="7">No hay eventos registrados.</td></tr>';
+    eventsBody.innerHTML = '<tr><td colspan="6">No hay eventos registrados.</td></tr>';
     return;
   }
 
   eventsBody.innerHTML = eventos
     .map(evento => {
       const categoria = getCategoriasAdmin().find(cat => cat.id === Number(evento.categoriaId));
-      const pais = getPaisesAdmin().find(p => Number(p.id) === Number(evento.paisId));
       return `
         <tr>
           <td>${evento.codigo}</td>
           <td>${evento.nombre}</td>
           <td>${categoria?.nombre || 'Sin categoría'}</td>
-          <td>${pais?.nombre || '-'}</td>
           <td>${evento.ciudad}</td>
           <td>$${evento.precio}</td>
           <td>
@@ -427,7 +368,6 @@ function fillEventForm(eventoId) {
   const codigoInput = eventForm?.querySelector('input[name="codigo"]');
   const nombreInput = eventForm?.querySelector('input[name="nombre"]');
   const categoriaSelect = eventForm?.querySelector('select[name="categoriaId"]');
-  const paisIdInput = eventForm?.querySelector('select[name="paisId"]');
   const ciudadInput = eventForm?.querySelector('select[name="ciudad"]');
   const precioInput = eventForm?.querySelector('input[name="precio"]');
   const fechaInput = eventForm?.querySelector('input[name="fecha"]');
@@ -439,8 +379,6 @@ function fillEventForm(eventoId) {
   if (codigoInput) codigoInput.value = evento.codigo;
   if (nombreInput) nombreInput.value = evento.nombre;
   if (categoriaSelect) categoriaSelect.value = evento.categoriaId;
-  if (paisIdInput) paisIdInput.value = evento.paisId;
-  fillCiudadSelect(evento.paisId, evento.ciudad);
   if (precioInput) precioInput.value = evento.precio;
   if (fechaInput) fechaInput.value = evento.fecha;
   if (horaInput) horaInput.value = evento.hora;
@@ -494,7 +432,6 @@ function handleEventSubmit(event) {
   const codigo = formData.get('codigo')?.toString().trim();
   const nombre = formData.get('nombre')?.toString().trim();
   const categoriaId = formData.get('categoriaId');
-  const paisId = formData.get('paisId');
   const precio = Number(formData.get('precio'));
   const fecha = formData.get('fecha')?.toString();
   const hora = formData.get('hora')?.toString();
@@ -503,7 +440,7 @@ function handleEventSubmit(event) {
   const descripcion = formData.get('descripcion')?.toString().trim();
   const eventos = getEventosAdmin();
 
-  if (!codigo || !nombre || !categoriaId || !paisId || !precio || !fecha || !hora || !ciudad || !imagen || !descripcion) {
+  if (!codigo || !nombre || !categoriaId || !precio || !fecha || !hora || !ciudad || !imagen || !descripcion) {
     return;
   }
 
@@ -515,7 +452,6 @@ function handleEventSubmit(event) {
           codigo,
           nombre,
           categoriaId: Number(categoriaId),
-          paisId: Number(paisId),
           precio,
           fecha,
           hora,
@@ -533,7 +469,6 @@ function handleEventSubmit(event) {
       codigo,
       nombre,
       categoriaId: Number(categoriaId),
-      paisId: Number(paisId),
       precio,
       fecha,
       hora,
@@ -597,13 +532,53 @@ function handleTableClick(event) {
     const ventas = getVentasAdmin();
     const venta = ventas.find(item => Number(item.id) === id);
     if (!venta) return;
-    alert(`Venta: ${new Date(venta.fecha).toLocaleString('es-CO')}
-Cliente: ${venta.cliente.nombre}
-Ciudad: ${venta.ciudad}
-Total: $${venta.total}
-
-Items:\n${venta.items.map(item => `- ${item.nombre} ($${item.precio})`).join('\n')}`);
+    showSaleModal(venta);
   }
+}
+
+function showSaleModal(venta) {
+  const existing = document.getElementById('sale-modal');
+  if (existing) existing.remove();
+  const backdrop = document.createElement('div');
+  backdrop.id = 'sale-modal';
+  Object.assign(backdrop.style, {
+    position: 'fixed', inset: '0', zIndex: '10000',
+    background: 'rgba(0,0,0,0.7)', display: 'flex',
+    alignItems: 'center', justifyContent: 'center'
+  });
+  backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.remove(); });
+  const modal = document.createElement('div');
+  Object.assign(modal.style, {
+    background: '#1a1a1a', border: '1px solid rgba(247,211,78,0.2)',
+    borderRadius: '1rem', padding: '2rem', maxWidth: '500px',
+    width: '90%', color: '#e0d6c8', maxHeight: '80vh', overflowY: 'auto'
+  });
+  const itemsHtml = venta.items.map(item =>
+    `<tr><td style="padding:0.25rem 0">${item.nombre}</td><td style="padding:0.25rem 0;text-align:right">$${item.precio}</td></tr>`
+  ).join('');
+  modal.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:1rem">
+      <h3 style="margin:0;color:#f7d34e">Detalle de Venta</h3>
+      <button id="sale-modal-close" style="background:none;border:none;color:#999;font-size:1.5rem;cursor:pointer">&times;</button>
+    </div>
+    <p style="margin:0 0 0.25rem;color:#999;font-size:0.85rem">${new Date(venta.fecha).toLocaleString('es-CO')}</p>
+    <p style="margin:0 0 0.25rem"><strong>Cliente:</strong> ${venta.cliente.nombre}</p>
+    <p style="margin:0 0 0.25rem"><strong>Documento:</strong> ${venta.cliente.identificacion}</p>
+    <p style="margin:0 0 0.25rem"><strong>Email:</strong> ${venta.cliente.email}</p>
+    <p style="margin:0 0 0.25rem"><strong>Telefono:</strong> ${venta.cliente.telefono}</p>
+    <p style="margin:0 0 0.25rem"><strong>Direccion:</strong> ${venta.cliente.direccion}</p>
+    <p style="margin:0 0 1rem"><strong>Ciudad:</strong> ${venta.ciudad}</p>
+    <hr style="border-color:rgba(255,255,255,0.1);margin:1rem 0">
+    <table style="width:100%;border-collapse:collapse">
+      <thead><tr><th style="text-align:left;color:#f7d34e;padding-bottom:0.5rem">Item</th><th style="text-align:right;color:#f7d34e;padding-bottom:0.5rem">Precio</th></tr></thead>
+      <tbody>${itemsHtml}</tbody>
+    </table>
+    <hr style="border-color:rgba(255,255,255,0.1);margin:1rem 0">
+    <p style="text-align:right;font-size:1.1rem;margin:0"><strong>Total: <span style="color:#f7d34e">$${venta.total}</span></strong></p>
+  `;
+  backdrop.appendChild(modal);
+  document.body.appendChild(backdrop);
+  document.getElementById('sale-modal-close')?.addEventListener('click', () => backdrop.remove());
 }
 
 /**
@@ -635,7 +610,7 @@ function handleLogin(event) {
   if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
     saveSesionAdmin({ email });
     if (loginError) loginError.classList.add('hidden');
-    window.location.href = 'eventos.html';
+    window.location.href = 'dashboard.html';
   } else {
     if (loginError) loginError.classList.remove('hidden');
   }
@@ -659,7 +634,7 @@ function initLoginPage() {
   });
 
   if (loadSesionAdmin()) {
-    window.location.href = 'eventos.html';
+    window.location.href = 'dashboard.html';
     return;
   }
 
@@ -667,13 +642,12 @@ function initLoginPage() {
 }
 
 /**
- * Exporta todos los datos (categorías, países, eventos, ventas, contactos)
+ * Exporta todos los datos (categorías, eventos, ventas, contactos)
  * a un archivo JSON descargable con respaldo de la fecha actual.
  */
 function exportJSON() {
   const data = {
     categorias: loadCategorias(),
-    paises: loadPaises(),
     eventos: loadEventos(),
     ventas: loadVentas(),
     contactos: typeof obtenerContactos === 'function' ? obtenerContactos() : []
@@ -688,27 +662,6 @@ function exportJSON() {
 }
 
 /**
- * Genera un archivo JSON público con categorías, solo Colombia y eventos,
- * listo para ser publicado en el sitio público.
- */
-function publishJSON() {
-  const paises = loadPaises();
-  const colombia = paises.find(p => p.nombre === 'Colombia');
-  const data = {
-    categorias: loadCategorias(),
-    paises: colombia ? [colombia] : [],
-    eventos: loadEventos()
-  };
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'eventos.json';
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-/**
  * Inicializa la vista SPA de administración con navegación, formularios y exportación.
  */
 function initSpaPage() {
@@ -717,8 +670,6 @@ function initSpaPage() {
   if (categoryForm) categoryForm.addEventListener('submit', handleCategorySubmit);
   if (eventForm) {
     eventForm.addEventListener('submit', handleEventSubmit);
-    fillPaisSelect();
-    setupPaisListener();
   }
   if (categoriesBody) categoriesBody.addEventListener('click', handleTableClick);
   if (eventsBody) eventsBody.addEventListener('click', handleTableClick);
@@ -730,9 +681,6 @@ function initSpaPage() {
   } else {
     window.location.href = 'admin.html';
   }
-
-  document.getElementById('export-json')?.addEventListener('click', exportJSON);
-  document.getElementById('publish-json')?.addEventListener('click', publishJSON);
 
   if (liveTime) {
     updateLiveTime();
@@ -751,6 +699,12 @@ function initStandalonePage() {
   }
 
   logoutButton.addEventListener('click', handleLogout);
+
+  document.querySelectorAll('.metric-card[data-href]').forEach(card => {
+    card.addEventListener('click', () => {
+      window.location.href = card.dataset.href;
+    });
+  });
 
   if (categoriesBody) {
     categoriesBody.addEventListener('click', handleTableClick);
@@ -779,14 +733,9 @@ function initStandalonePage() {
   if (eventForm) {
     eventForm.addEventListener('submit', handleEventSubmit);
     fillEventCategorySelect();
-    fillPaisSelect();
-    setupPaisListener();
   }
 
   updateDashboard();
-
-  document.getElementById('export-json')?.addEventListener('click', exportJSON);
-  document.getElementById('publish-json')?.addEventListener('click', publishJSON);
 
   if (liveTime) {
     updateLiveTime();

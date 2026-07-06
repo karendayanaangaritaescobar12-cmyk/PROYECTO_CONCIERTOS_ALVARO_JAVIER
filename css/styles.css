@@ -1298,6 +1298,17 @@ body.admin-page {
   grid-column: span 2;
 }
 
+.metric-card[data-href] {
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.metric-card[data-href]:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 193, 7, 0.25);
+  transform: translateY(-2px);
+}
+
 .metric-label {
   display: block;
   color: #d8c28b;

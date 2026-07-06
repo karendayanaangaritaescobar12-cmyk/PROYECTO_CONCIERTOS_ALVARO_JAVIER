@@ -29,11 +29,34 @@ function saveCart(cart) {
  */
 function addToCart(event) {
   const cart = loadCart();
-  const exists = cart.find(item => item.id === event.id);
-  if (exists) return;
   cart.push(event);
   saveCart(cart);
   updateCartCount();
+  showCartToast(event.nombre || 'Evento');
+}
+
+function showCartToast(nombre) {
+  const existing = document.getElementById('cart-toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.id = 'cart-toast';
+  toast.textContent = nombre + ' agregado al carrito';
+  Object.assign(toast.style, {
+    position: 'fixed', bottom: '1.5rem', right: '1.5rem', zIndex: '9999',
+    background: 'rgba(0,0,0,0.85)', color: '#f7d34e', padding: '0.75rem 1.25rem',
+    borderRadius: '0.5rem', fontSize: '0.9rem', border: '1px solid rgba(247,211,78,0.25)',
+    opacity: '0', transform: 'translateY(1rem)', transition: 'opacity 0.3s, transform 0.3s'
+  });
+  document.body.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateY(0)';
+  });
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(1rem)';
+    setTimeout(() => toast.remove(), 300);
+  }, 2000);
 }
 
 /**
@@ -41,7 +64,9 @@ function addToCart(event) {
  * @param {number|string} id - Identificador del evento a remover
  */
 function removeFromCart(id) {
-  const cart = loadCart().filter(item => item.id !== id);
+  const cart = loadCart();
+  const index = cart.findIndex(item => item.id === id);
+  if (index !== -1) cart.splice(index, 1);
   saveCart(cart);
   renderCart();
   updateCartCount();

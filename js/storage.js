@@ -9,7 +9,6 @@ const STORAGE_KEYS = {
   ventas: 'conciertos_ventas',
   carrito: 'conciertos_carrito',
   sesionAdmin: 'conciertos_sesion_admin',
-  paises: 'conciertos_paises'
 };
 
 /**
@@ -142,22 +141,6 @@ function clearSesionAdmin() {
   localStorage.removeItem(STORAGE_KEYS.sesionAdmin);
 }
 
-/**
- * Obtiene la lista de países almacenados.
- * @returns {Array} Lista de países
- */
-function loadPaises() {
-  return loadArray(STORAGE_KEYS.paises);
-}
-
-/**
- * Guarda la lista de países.
- * @param {Array} paises - Lista de países a persistir
- */
-function savePaises(paises) {
-  saveItem(STORAGE_KEYS.paises, paises);
-}
-
 window.loadCategorias = loadCategorias;
 window.saveCategorias = saveCategorias;
 window.loadEventos = loadEventos;
@@ -168,6 +151,3 @@ window.loadCarrito = loadCarrito;
 window.saveCarrito = saveCarrito;
 window.loadSesionAdmin = loadSesionAdmin;
 window.saveSesionAdmin = saveSesionAdmin;
-window.clearSesionAdmin = clearSesionAdmin;
-window.loadPaises = loadPaises;
-window.savePaises = savePaises;
