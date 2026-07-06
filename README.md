@@ -1,3 +1,8 @@
+<img width="1828" height="949" alt="Captura desde 2026-07-06 16-27-29" src="https://github.com/user-attachments/assets/2001206f-ace1-4390-b126-4a5623062f12" />
+<img width="1828" height="949" alt="Captura desde 2026-07-06 16-27-37" src="https://github.com/user-attachments/assets/3176a892-c04c-4fff-b4ae-99fdc349a79f" />
+<img width="1828" height="949" alt="Captura desde 2026-07-06 16-27-47" src="https://github.com/user-attachments/assets/f6b50e2d-ff83-4a71-b90c-062fd32adb82" />
+<img width="1828" height="949" alt="Captura desde 2026-07-06 16-27-54" src="https://github.com/user-attachments/assets/d257829d-e046-444f-9577-695db98f18b3" />
+<img width="1828" height="949" alt="Captura desde 2026-07-06 16-27-59" src="https://github.com/user-attachments/assets/2a576227-8e4c-479a-8a54-7e8085f33608" />
 # PROYECTO CONCIERTOS - Infernal Management
 
 Sistema de gestión y venta de entradas para conciertos con panel administrativo y vista pública. Desarrollado únicamente con HTML, CSS y JavaScript (sin frameworks, sin librerías externas).
