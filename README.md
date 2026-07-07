@@ -187,7 +187,7 @@ location.reload();
 
 ## Credenciales Admin
 
-- **Email:** `admin@gmail.com`
+- **Email:** `admin@mail`
 - **Contrasena:** `123456`
 
 ## Creditos
