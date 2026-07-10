@@ -5,7 +5,8 @@
 
 const REGISTRO_KEYS = {
   contactos: 'registro_contactos',
-  ventas: 'conciertos_ventas'
+  ventas: 'conciertos_ventas',
+  sugerencias: 'conciertos_sugerencias'
 };
 
 /**
@@ -71,6 +72,30 @@ function obtenerVentasRegistro() {
   return loadRegistroArray(REGISTRO_KEYS.ventas);
 }
 
+/**
+ * Guarda una sugerencia del buzón.
+ * @param {Object} datos - Datos del formulario (nombre, email, sugerencia)
+ */
+function guardarSugerencia(datos) {
+  const sugerencias = loadRegistroArray(REGISTRO_KEYS.sugerencias);
+  sugerencias.push({
+    id: Date.now(),
+    fecha: new Date().toISOString(),
+    ...datos
+  });
+  saveRegistro(REGISTRO_KEYS.sugerencias, sugerencias);
+}
+
+/**
+ * Obtiene todas las sugerencias registradas.
+ * @returns {Array} Lista de sugerencias
+ */
+function obtenerSugerencias() {
+  return loadRegistroArray(REGISTRO_KEYS.sugerencias);
+}
+
 window.guardarContacto = guardarContacto;
 window.obtenerContactos = obtenerContactos;
 window.obtenerVentasRegistro = obtenerVentasRegistro;
+window.guardarSugerencia = guardarSugerencia;
+window.obtenerSugerencias = obtenerSugerencias;

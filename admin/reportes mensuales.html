@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reportes Mensuales | Administración</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body class="admin-page">
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="brand">
+        <span class="brand-title">INFERNAL</span>
+        <span class="brand-subtitle">MANAGEMENT</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="categorias.html">Categorías</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="reportes.html">Reportes</a>
+        <a class="active" href="reportes mensuales.html">Reportes Mensuales</a>
+      </nav>
+      <button id="logout-button" class="sidebar-button" type="button">Cerrar sesión</button>
+      <a href="../index.html" class="sidebar-button back-button" style="text-align:center;">PAGINA PRINCIPAL</a>
+    </aside>
+
+    <main class="admin-content">
+      <div class="admin-header">
+        <div>
+          <p class="eyebrow">Reportes</p>
+          <h1>Reporte mensual de ventas</h1>
+        </div>
+        <div class="live-panel">
+          <span>Hora actual</span>
+          <strong id="live-time">00:00:00</strong>
+        </div>
+      </div>
+
+      <div class="filters-panel" style="display:flex;gap:1rem;align-items:end;margin-bottom:1.5rem;background:none;border:none;padding:0">
+        <div class="filter-group">
+          <label for="report-year">Ano</label>
+          <select id="report-year"></select>
+        </div>
+        <div class="filter-group">
+          <label for="report-month">Mes</label>
+          <select id="report-month"></select>
+        </div>
+        <button id="report-generate" class="primary-button" type="button">Generar reporte</button>
+      </div>
+
+      <div class="table-panel scrollable">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Codigo</th>
+              <th>Evento</th>
+              <th>Entradas vendidas</th>
+              <th>Valor total</th>
+            </tr>
+          </thead>
+          <tbody id="report-body"></tbody>
+        </table>
+        <div class="table-footer" style="display:flex;justify-content:space-between;padding:1rem;font-size:1.1rem">
+          <span>Total general</span>
+          <strong id="report-general-total">$0</strong>
+        </div>
+      </div>
+
+      <p id="report-empty" class="hidden" style="text-align:center;color:#999">No hay ventas para el periodo seleccionado.</p>
+    </main>
+  </div>
+
+  <script defer src="../js/storage.js"></script>
+  <script defer src="../js/registro.js"></script>
+  <script defer src="../js/data-seed.js"></script>
+  <script defer src="../js/admin.js"></script>
+  <script defer src="../js/reporte-mensual.js"></script>
+</body>
+</html>

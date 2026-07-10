@@ -20,6 +20,7 @@
       </nav>
       <div class="header-actions">
         <button id="open-cart" class="cart-toggle" type="button">Carrito (<span id="cart-count">0</span>)</button>
+        <button id="open-suggestion" class="secondary-button" type="button" style="background:none;border:1px solid rgba(229,193,88,0.3);color:#e5c158;padding:0.4rem 0.8rem;border-radius:0.4rem;cursor:pointer;font-size:0.85rem">Buzón de sugerencias</button>
         <a class="secondary-button" href="admin/admin.html">Administración</a>
       </div>
       
@@ -69,6 +70,21 @@
         </form>
       </section>
     </section>
+
+    <div id="suggestion-backdrop" class="suggestion-backdrop hidden"></div>
+    <aside class="suggestion-modal hidden" id="suggestion-modal">
+      <div class="suggestion-header">
+        <h2>Buzón de sugerencias</h2>
+        <button id="close-suggestion" class="cart-close-button" type="button">Cerrar</button>
+      </div>
+      <form id="suggestion-form" class="suggestion-form">
+        <label>Nombre <input name="nombre" required /></label>
+        <label>Email <input name="email" type="email" required /></label>
+        <label>Mensaje <textarea name="mensaje" rows="4" required></textarea></label>
+        <button type="submit" class="primary-button">Enviar sugerencia</button>
+        <p id="suggestion-message" class="success-message hidden"></p>
+      </form>
+    </aside>
 
     <div id="cart-backdrop" class="cart-backdrop"></div>
     <aside class="cart-panel hidden" id="cart-panel">

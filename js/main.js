@@ -185,6 +185,47 @@ function initContactForm() {
 }
 
 /**
+ * Inicializa el buzón de sugerencias: abre/cierra modal y guarda datos.
+ */
+function initSuggestionBox() {
+  const openBtn = document.getElementById('open-suggestion');
+  const closeBtn = document.getElementById('close-suggestion');
+  const backdrop = document.getElementById('suggestion-backdrop');
+  const modal = document.getElementById('suggestion-modal');
+  const form = document.getElementById('suggestion-form');
+  const msg = document.getElementById('suggestion-message');
+  if (!openBtn || !modal) return;
+
+  function openSuggestion() {
+    backdrop.classList.remove('hidden');
+    modal.classList.remove('hidden');
+  }
+
+  function closeSuggestion() {
+    backdrop.classList.add('hidden');
+    modal.classList.add('hidden');
+    msg.classList.add('hidden');
+  }
+
+  openBtn.addEventListener('click', openSuggestion);
+  closeBtn?.addEventListener('click', closeSuggestion);
+  backdrop?.addEventListener('click', closeSuggestion);
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries());
+    if (!data.nombre?.trim() || !data.email?.trim() || !data.mensaje?.trim()) return;
+    if (typeof guardarSugerencia === 'function') {
+      guardarSugerencia(data);
+    }
+    form.reset();
+    msg.textContent = 'Sugerencia enviada con exito. Gracias por tu opinion.';
+    msg.classList.remove('hidden');
+    setTimeout(() => { msg.classList.add('hidden'); closeSuggestion(); }, 2000);
+  });
+}
+
+/**
  * Inicializa la vista pública: carga datos, renderiza filtros y eventos,
  * y vincula los event listeners de búsqueda, filtros, carrito y contacto.
  * @returns {Promise<void>}
@@ -201,6 +242,7 @@ async function initPublicView() {
     initCartModule();
   }
   initContactForm();
+  initSuggestionBox();
 }
 
 document.addEventListener('DOMContentLoaded', initPublicView);

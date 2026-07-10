@@ -1389,3 +1389,64 @@ body:not(.admin-page) select:focus {
   transform: translateY(-5px);
   border-color: #e5c158;
 }
+
+/* Buzón de sugerencias - modal */
+.suggestion-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9000;
+}
+
+.suggestion-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9001;
+  background: #121212;
+  border: 1px solid rgba(229,193,88,0.15);
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 90%;
+  max-width: 480px;
+  max-height: 80vh;
+  overflow-y: auto;
+  color: #e0d6c8;
+}
+
+.suggestion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.suggestion-header h2 {
+  margin: 0;
+  color: #e5c158;
+  font-size: 1.25rem;
+}
+
+.suggestion-form label {
+  display: block;
+  margin-bottom: 1rem;
+  color: #d8c28b;
+}
+
+.suggestion-form input,
+.suggestion-form textarea {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.4rem;
+  padding: 0.5rem;
+  color: #e0d6c8;
+  box-sizing: border-box;
+}
+
+.suggestion-form textarea {
+  resize: vertical;
+}
